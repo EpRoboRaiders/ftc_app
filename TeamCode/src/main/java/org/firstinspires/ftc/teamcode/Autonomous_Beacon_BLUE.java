@@ -52,7 +52,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
     public static final int RANGE1_REG_START = 0x04; //Register to start reading
     public static final int RANGE1_READ_LENGTH = 2; //Number of byte to read
     static final double MAX_POS = 0.3;     // Maximum rotational position
-    static final double MIN_POS = 0.05;     // Minimum rotational position
+    static final double MIN_POS = 0.025;     // Minimum rotational position
     static final int DARK = 5;
 
     /* Declare OpMode members. */
@@ -196,7 +196,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         boolean WallFound = false;
         byte[] range1Cache; //The read will return an array of bytes. They are stored in this variable
 
-        while (opModeIsActive() && (runtime.milliseconds() <= 3000) && !WallFound) {
+        while (opModeIsActive() && (runtime.milliseconds() <= 5000) && !WallFound) {
 
             range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
 
@@ -219,47 +219,51 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             } else {
                 Rlightsensor = LIGHT;
             }
-            if (UltraSonicDistance > 9 && UltraSonicDistance < 12) {
+            if (UltraSonicDistance == 255) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
+            }
+            if (UltraSonicDistance > 11 && UltraSonicDistance < 14) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
                 WallFound = true;
                 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-
-            } else if (UltraSonicDistance > 12 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
+            } else if (UltraSonicDistance > 14 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
 
                 robot.leftMotor.setPower(0.1);//forwards
                 robot.rightMotor.setPower(0.1);
 
-            } else if (UltraSonicDistance > 12 && Rlightsensor == DARK && Llightsensor == DARK) {
+            } else if (UltraSonicDistance > 14 && Rlightsensor == DARK && Llightsensor == DARK) {
 
                 robot.leftMotor.setPower(0.1);//forwards
                 robot.rightMotor.setPower(0.1);
 
-            } else if (UltraSonicDistance > 12 && Rlightsensor == LIGHT && Llightsensor == DARK) {
+            } else if (UltraSonicDistance > 14 && Rlightsensor == LIGHT && Llightsensor == DARK) {
 
                 robot.leftMotor.setPower(0.1);//forwards
                 robot.rightMotor.setPower(0.2);
 
-            } else if (UltraSonicDistance > 12 && Rlightsensor == DARK && Llightsensor == LIGHT) {
+            } else if (UltraSonicDistance > 14 && Rlightsensor == DARK && Llightsensor == LIGHT) {
 
                 robot.leftMotor.setPower(0.2);//forwards
                 robot.rightMotor.setPower(0.1);
                 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-            } else if (UltraSonicDistance < 9 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
+            } else if (UltraSonicDistance < 11 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
 
                 robot.leftMotor.setPower(-.1); //backwards
                 robot.rightMotor.setPower(-.1);
 
-            } else if (UltraSonicDistance < 9 && Rlightsensor == DARK && Llightsensor == DARK) {
+            } else if (UltraSonicDistance < 11 && Rlightsensor == DARK && Llightsensor == DARK) {
 
                 robot.leftMotor.setPower(-.1); //backwards
                 robot.rightMotor.setPower(-.1);
 
-            } else if (UltraSonicDistance < 9 && Rlightsensor == LIGHT && Llightsensor == DARK) {
+            } else if (UltraSonicDistance < 11 && Rlightsensor == LIGHT && Llightsensor == DARK) {
 
                 robot.leftMotor.setPower(-.2); //backwards
                 robot.rightMotor.setPower(-.1);
 
-            } else if (UltraSonicDistance < 9 && Rlightsensor == DARK && Llightsensor == LIGHT) {
+            } else if (UltraSonicDistance < 11 && Rlightsensor == DARK && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(-.1); //backwards
                 robot.rightMotor.setPower(-.2);
             }   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
