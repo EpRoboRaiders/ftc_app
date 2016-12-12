@@ -142,7 +142,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(650);
+                sleep(690);
                 ForwardDone = true;
             }
 
@@ -175,7 +175,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
                 robot.leftMotor.setPower(.2);
-                robot.rightMotor.setPower(-.1);
+                robot.rightMotor.setPower(-.15);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -289,36 +289,52 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             telemetry.addData("5 Blue ", robot.colorSensor.blue());
 
             //illuminate the RED/BLUE LED on the Core Device Interface if the RED/BLUE value is greatest
+
+            robot.Lservo.setPosition(leftposition);
+            robot.Rservo.setPosition(rightposition);
+
+            boolean SensorRed = false;
+            if(robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green()) {
+                SensorRed = true;
+            }
+
             runtime.reset();
-            while (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green() && (runtime.seconds() <= 1)) {
+            while (runtime.seconds() <= 1) {
+                if(robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green() && !SensorRed) {
+                    SensorRed = true;
+                    runtime.reset();
+                } else if (robot.colorSensor.blue() > robot.colorSensor.red() && robot.colorSensor.blue() > robot.colorSensor.green() && SensorRed) {
+                    SensorRed = false;
+                    runtime.reset();
+                }
+
                 telemetry.addData("1", "Waiting %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
+            }
+
+            if (SensorRed) {
                 robot.Lservo.setPosition(MIN_POS);
                 robot.Rservo.setPosition(MIN_POS);
-                if (UltraSonicDistance > 9) {
-                    robot.leftMotor.setPower(.1);
-                    robot.rightMotor.setPower(.1);
-                }
+                sleep(1000);
             }
-            while (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green()) {
-                robot.Lservo.setPosition(leftposition);
-                robot.Rservo.setPosition(rightposition);
 
-                robot.CDI.setLED(1, true);           //Red ON
-                robot.CDI.setLED(0, false);          //Blue OFF
-            }
-            runtime.reset();
-            while (robot.colorSensor.blue() > robot.colorSensor.red() && robot.colorSensor.blue() > robot.colorSensor.green() && (runtime.seconds() <= 1)) {
-                telemetry.addData("2", "Waiting %2.5f S Elapsed", runtime.seconds());
-                telemetry.update();
-            }
-            while (robot.colorSensor.blue() > robot.colorSensor.red() && robot.colorSensor.blue() > robot.colorSensor.green()) {
-                robot.Lservo.setPosition(leftposition);
-                robot.Rservo.setPosition(rightposition);
+            robot.leftMotor.setPower(.1);
+            robot.rightMotor.setPower(.1);
 
-                robot.CDI.setLED(1, false);          //Red OFF
-                robot.CDI.setLED(0, true);           //Blue ON
-            }
+            do
+            {
+                range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
+                UltraSonicDistance = range1Cache[0] & 0xFF;
+            } while (UltraSonicDistance > 9);
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+            sleep(1000);
+            robot.rightMotor.setPower(-.1);
+            robot.leftMotor.setPower(-.1);
+            sleep(1000);
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+            sleep(10000);
         }
     }
 }
