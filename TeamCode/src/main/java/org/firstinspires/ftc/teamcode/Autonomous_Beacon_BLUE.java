@@ -329,12 +329,12 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
             sleep(1000);
-            robot.rightMotor.setPower(-.1);
-            robot.leftMotor.setPower(-.1);
+            robot.rightMotor.setPower(-.15);
+            robot.leftMotor.setPower(-.15);
             sleep(3000);
-            robot.leftMotor.setPower(-.2);
-            robot.rightMotor.setPower(-.1);
-            sleep(1000);
+            robot.leftMotor.setPower(-.3);
+            robot.rightMotor.setPower(.1);
+            sleep(1500);
             FirstBeacon = true;
         }
         runtime.reset();
