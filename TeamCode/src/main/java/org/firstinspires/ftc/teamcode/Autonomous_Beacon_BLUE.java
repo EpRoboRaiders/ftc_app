@@ -83,7 +83,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         boolean LightFound = false;
 
         // Find White Line from start position-=-=-=--=-=-=-
-        while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (LightFound == false)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
@@ -169,8 +169,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
-                robot.leftMotor.setPower(.2);
-                robot.rightMotor.setPower(-.15);
+                robot.leftMotor.setPower(.17);
+                robot.rightMotor.setPower(-.12);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -236,11 +236,11 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == DARK) {
 
                 robot.leftMotor.setPower(0.1);//forwards
-                robot.rightMotor.setPower(0.2);
+                robot.rightMotor.setPower(0.15);
 
             } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == LIGHT) {
 
-                robot.leftMotor.setPower(0.2);//forwards
+                robot.leftMotor.setPower(0.15);//forwards
                 robot.rightMotor.setPower(0.1);
                 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
             } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
@@ -255,12 +255,12 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
             } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == DARK) {
 
-                robot.leftMotor.setPower(-.2); //backwards
+                robot.leftMotor.setPower(-.15); //backwards
                 robot.rightMotor.setPower(-.1);
 
             } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(-.1); //backwards
-                robot.rightMotor.setPower(-.2);
+                robot.rightMotor.setPower(-.15);
             }   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
         }
@@ -326,10 +326,10 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             sleep(1000);
             robot.rightMotor.setPower(-.15);
             robot.leftMotor.setPower(-.15);
-            sleep(2700);
+            sleep(2400);
             robot.leftMotor.setPower(-.3);
             robot.rightMotor.setPower(.1);
-            sleep(740);
+            sleep(590);
             FirstBeacon = true;
         }
         robot.Lservo.setPosition(MAX_POS);
@@ -338,7 +338,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         LightFound = false;
 
         // Find White Line from start position-=-=-=--=-=-=-
-        while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (LightFound == false)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 100000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
