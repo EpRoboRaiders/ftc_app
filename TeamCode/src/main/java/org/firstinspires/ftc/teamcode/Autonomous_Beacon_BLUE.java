@@ -329,7 +329,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             sleep(2400);
             robot.leftMotor.setPower(-.3);
             robot.rightMotor.setPower(.1);
-            sleep(590);
+            sleep(700);
             FirstBeacon = true;
         }
         robot.Lservo.setPosition(MAX_POS);
@@ -392,8 +392,16 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(690);
+                sleep(650);
                 ForwardDone = true;
+            }
+            if (Rlightsensor == LIGHT && Llightsensor == DARK){
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+            }
+            if (Rlightsensor == DARK && Llightsensor == LIGHT){
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
             }
 
             // send the info back to driver station using telemetry function.
@@ -407,119 +415,18 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
         runtime.reset();
         Line = false;
-        while (opModeIsActive() && (runtime.milliseconds() < 5000) && !Line) {
-            double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
-            double Llightsensor = robot.leftlightSensor.getRawLightDetected();
+        while (opModeIsActive() && (runtime.milliseconds() < 1000000) && !Line) {
 
-            if (Llightsensor < 2.0) {
-                Llightsensor = DARK;
-            } else {
-                Llightsensor = LIGHT;
-            }
-
-            if (Rlightsensor < 2.0) {
-                Rlightsensor = DARK;
-            } else {
-                Rlightsensor = LIGHT;
-            }
-
-            if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
-                robot.leftMotor.setPower(.2);
-                robot.rightMotor.setPower(-.15);
-            } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
-                robot.leftMotor.setPower(0);
-                robot.rightMotor.setPower(0);
-                Line = true;
-            } else if (Rlightsensor == DARK && Llightsensor == LIGHT && !Line) {
-                robot.leftMotor.setPower(0);
-                robot.rightMotor.setPower(0);
+            if (!Line) {
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(-.17);
+                sleep(1300);
                 Line = true;
             }
-            // send the info back to driver station using telemetry function.
-            telemetry.addData("LED1", bLedOn ? "On" : "Off");
-            telemetry.addData("Raw Left", Llightsensor);
-            telemetry.addData("Raw Right", Rlightsensor);
-            telemetry.update();
-        }
-
-        runtime.reset();
-        WallFound = false;
-
-        while (opModeIsActive() && (runtime.milliseconds() <= 5000) && !WallFound) {
-
-            range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
-
-            telemetry.addData("Ultra Sonic", range1Cache[0] & 0xFF);
-            telemetry.update();
-
-            int UltraSonicDistance = range1Cache[0] & 0xFF;
-
-            double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
-            double Llightsensor = robot.leftlightSensor.getRawLightDetected();
-
-            if (Llightsensor < 2.0) {
-                Llightsensor = DARK;
-            } else {
-                Llightsensor = LIGHT;
-            }
-
-            if (Rlightsensor < 2.0) {
-                Rlightsensor = DARK;
-            } else {
-                Rlightsensor = LIGHT;
-            }
-            if (UltraSonicDistance == 255) {
-                robot.leftMotor.setPower(0);
-                robot.rightMotor.setPower(0);
-            }
-            if (UltraSonicDistance > 14 && UltraSonicDistance < 16) {
-                robot.leftMotor.setPower(0);
-                robot.rightMotor.setPower(0);
-                WallFound = true;
-                //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-
-            } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-
-                robot.leftMotor.setPower(0.1);//forwards
-                robot.rightMotor.setPower(0.1);
-
-            } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == DARK) {
-
-                robot.leftMotor.setPower(0.1);//forwards
-                robot.rightMotor.setPower(0.1);
-
-            } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == DARK) {
-
-                robot.leftMotor.setPower(0.1);//forwards
-                robot.rightMotor.setPower(0.2);
-
-            } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == LIGHT) {
-
-                robot.leftMotor.setPower(0.2);//forwards
-                robot.rightMotor.setPower(0.1);
-                //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-            } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-
-                robot.leftMotor.setPower(-.1); //backwards
-                robot.rightMotor.setPower(-.1);
-
-            } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == DARK) {
-
-                robot.leftMotor.setPower(-.1); //backwards
-                robot.rightMotor.setPower(-.1);
-
-            } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == DARK) {
-
-                robot.leftMotor.setPower(-.2); //backwards
-                robot.rightMotor.setPower(-.1);
-
-            } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(-.1); //backwards
-                robot.rightMotor.setPower(-.2);
-            }   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
         }
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
+        runtime.reset();
         boolean SecondBeacon = false;
         // Reading Color-=-=-=-=-=-=--=-=-=-
         while (opModeIsActive() && !SecondBeacon) {  //Main loop of program
@@ -542,35 +449,17 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
             robot.Lservo.setPosition(leftposition);
             robot.Rservo.setPosition(rightposition);
-
-            boolean SensorRed = false;
-            if (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green()) {
-                SensorRed = true;
-            }
-
             runtime.reset();
-            while (runtime.seconds() <= 1) {
-                if (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green() && !SensorRed) {
-                    SensorRed = true;
-                    runtime.reset();
-                } else if (robot.colorSensor.blue() > robot.colorSensor.red() && robot.colorSensor.blue() > robot.colorSensor.green() && SensorRed) {
-                    SensorRed = false;
-                    runtime.reset();
-                }
+            boolean FirstPress = false;
 
-                telemetry.addData("1", "Waiting %2.5f S Elapsed", runtime.seconds());
-                telemetry.update();
-            }
-
-            if (SensorRed) {
-                robot.Lservo.setPosition(MIN_POS);
-                robot.Rservo.setPosition(MIN_POS);
+            if(UltraSonicDistance > 6 && runtime.milliseconds() < 1000 && !FirstPress){
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
                 sleep(1000);
+                FirstPress = true;
             }
-
-            robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(.1);
-
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
             do {
                 range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
                 UltraSonicDistance = range1Cache[0] & 0xFF;
@@ -583,7 +472,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             sleep(600);
             robot.rightMotor.setPower(0);
             robot.leftMotor.setPower(0);
-            sleep(100000);
+            sleep(1000000000);
         }
     }
 }
