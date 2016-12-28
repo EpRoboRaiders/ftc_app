@@ -32,18 +32,17 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.*;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-@Autonomous(name = "BLUE Autonomous BEACON", group = "Pushbot")
+@Autonomous(name = "RED Autonomous BEACON", group = "Pushbot")
 
-public class Autonomous_Beacon_BLUE extends LinearOpMode {
+public class Autonomous_Beacon_RED extends LinearOpMode {
     public static final int RANGE1_REG_START = 0x04; //Register to start reading
     public static final int RANGE1_READ_LENGTH = 2; //Number of byte to read
     static final double MAX_POS = 0.1;     // Maximum rotational position
@@ -108,8 +107,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
                 telemetry.update();
             }
 
-            if ( (SensorRed && !BeaconRedDesired) ||
-                    (!SensorRed && BeaconRedDesired) ) {
+            if ( (!SensorRed && BeaconRedDesired) ||
+                    (SensorRed && !BeaconRedDesired) ) {
                 robot.Lservo.setPosition(MIN_POS); // Left Up
                 robot.Rservo.setPosition(MIN_POS); // Right Down
                 sleep(1000);
@@ -128,8 +127,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             robot.rightMotor.setPower(-.15);
             robot.leftMotor.setPower(-.15);
             sleep(2400);
-            robot.leftMotor.setPower(-.3);
-            robot.rightMotor.setPower(.1);
+            robot.leftMotor.setPower(.1);
+            robot.rightMotor.setPower(-.3);
             sleep(670);
             FirstBeacon = true;
         }
@@ -246,8 +245,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
-                robot.leftMotor.setPower(.17);
-                robot.rightMotor.setPower(-.12);
+                robot.leftMotor.setPower(-.12);
+                robot.rightMotor.setPower(.17);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -428,8 +427,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && !Line) {
 
             if (!Line) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(-.17);
+                robot.leftMotor.setPower(-.17);
+                robot.rightMotor.setPower(.1);
                 sleep(1170);
                 Line = true;
             }
@@ -486,8 +485,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             }
             boolean SecondPress = false;
             if(Red2 && !SecondPress);{
-                robot.leftMotor.setPower(.12);
-                robot.rightMotor.setPower(.1);
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.12);
                 telemetry.addData("I pressed the beacon again", "To make it blue");
                 telemetry.update();
                 sleep(1250);
