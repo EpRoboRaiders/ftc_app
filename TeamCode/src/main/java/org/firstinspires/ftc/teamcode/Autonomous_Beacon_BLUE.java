@@ -108,8 +108,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
                 telemetry.update();
             }
 
-            if ( (SensorRed && !BeaconRedDesired) ||
-                    (!SensorRed && BeaconRedDesired) ) {
+            if ((SensorRed && !BeaconRedDesired) ||
+                    (!SensorRed && BeaconRedDesired)) {
                 robot.Lservo.setPosition(MIN_POS); // Left Up
                 robot.Rservo.setPosition(MIN_POS); // Right Down
                 sleep(1000);
@@ -135,6 +135,14 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         }
         robot.Lservo.setPosition(MAX_POS);
         robot.Rservo.setPosition(MIN_POS);
+
+        return 0;
+    }
+
+    private int launcher() {
+            robot.launcherMotor.setPower(-.1);
+            sleep(1000);
+            robot.launcherMotor.setPower(0);
 
         return 0;
     }

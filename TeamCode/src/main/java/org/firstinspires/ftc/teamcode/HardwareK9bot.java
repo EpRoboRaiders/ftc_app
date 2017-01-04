@@ -28,6 +28,7 @@ public class HardwareK9bot {
     public DcMotor leftMotor = null;
     public DcMotor rightMotor = null;
     public DcMotor sweeperMotor = null;
+    public DcMotor launcherMotor = null;
 //    public Servo    arm         = null;
 //    public Servo    claw        = null;
 
@@ -55,18 +56,21 @@ public class HardwareK9bot {
         leftMotor = hwMap.dcMotor.get("left motor");
         rightMotor = hwMap.dcMotor.get("right motor");
         sweeperMotor = hwMap.dcMotor.get("sweeper");
+        launcherMotor = hwMap.dcMotor.get("launcher");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         leftMotor.setPower(0);
         rightMotor.setPower(0);
         sweeperMotor.setPower(0);
+        launcherMotor.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sweeperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        launcherMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         //       arm = hwMap.servo.get("arm");

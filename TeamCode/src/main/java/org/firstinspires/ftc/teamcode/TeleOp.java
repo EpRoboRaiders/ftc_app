@@ -37,9 +37,11 @@ public class TeleOp extends LinearOpMode {
     LightSensor leftlightSensor;  // Hardware Device Object
     LightSensor rightlightSensor;
     LightSensor lightSensor;
+
     // Define class members
     com.qualcomm.robotcore.hardware.Servo leftservo;
     com.qualcomm.robotcore.hardware.Servo rightservo;
+
     double position = (MAX_POS);
     double rightposition = MIN_POS;
     double leftposition = MIN_POS;
@@ -48,6 +50,7 @@ public class TeleOp extends LinearOpMode {
     double leftpower = 0;
     double rightpower = 0;
     double sweeper = 0;
+    double launcher = 0;
     boolean rampUp = true;
 
     HardwareK9bot robot = new HardwareK9bot();
@@ -115,6 +118,16 @@ public class TeleOp extends LinearOpMode {
                     rightposition = MAX_POS;
                 }
             }
+
+
+            //Launcher
+            if(gamepad2.x){
+                launcher = -.1;
+            }
+            if (!gamepad2.x){
+                launcher = 0;
+            }
+
             //Start of Driving
             if (gamepad1.left_stick_y != leftpower) {
                 if (leftpower < gamepad1.left_stick_y) {
@@ -222,6 +235,7 @@ public class TeleOp extends LinearOpMode {
             robot.leftMotor.setPower(leftpower);
             robot.rightMotor.setPower(rightpower);
             robot.sweeperMotor.setPower(sweeper);
+            robot.launcherMotor.setPower(launcher);
             // Set the motor to the new power and pause;
 
             sleep(CYCLE_MS);
