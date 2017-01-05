@@ -128,7 +128,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             robot.leftMotor.setPower(-.15);
             sleep(2400);
             robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(-.3);
+            robot.rightMotor.setPower(-.39);
             sleep(670);
             FirstBeacon = true;
         }
@@ -159,6 +159,16 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
         boolean LightFound = false;
 
         // Find White Line from start position-=-=-=--=-=-=-
+
+            robot.leftMotor.setPower(.2);
+            robot.rightMotor.setPower(.2);
+            sleep(2900);
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+            robot.launcherMotor.setPower(-.3);
+            sleep(2000);
+            robot.launcherMotor.setPower(0);
+
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -176,8 +186,8 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.17);
-                robot.rightMotor.setPower(.17);
+                robot.leftMotor.setPower(.3);
+                robot.rightMotor.setPower(.3);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);

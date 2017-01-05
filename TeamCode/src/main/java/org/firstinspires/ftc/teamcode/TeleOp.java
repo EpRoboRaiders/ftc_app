@@ -122,7 +122,7 @@ public class TeleOp extends LinearOpMode {
 
             //Launcher
             if(gamepad2.x){
-                launcher = -.1;
+                launcher = -.3;
             }
             if (!gamepad2.x){
                 launcher = 0;
