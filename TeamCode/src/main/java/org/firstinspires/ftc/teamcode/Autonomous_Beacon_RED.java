@@ -128,8 +128,8 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             robot.leftMotor.setPower(-.15);
             sleep(2400);
             robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(-.39);
-            sleep(670);
+            robot.rightMotor.setPower(-.4);
+            sleep(680);
             FirstBeacon = true;
         }
         robot.Lservo.setPosition(MAX_POS);
@@ -158,7 +158,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        // Find White Line from start position-=-=-=--=-=-=-
+        // Shooter-=-=-=-=-=-=-
 
             robot.leftMotor.setPower(.2);
             robot.rightMotor.setPower(.2);
@@ -168,7 +168,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             robot.launcherMotor.setPower(-.3);
             sleep(2000);
             robot.launcherMotor.setPower(0);
-
+        // Find White Line from start position-=-=-=--=-=-=-
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -192,7 +192,15 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
                 LightFound = true;
-
+            }
+            if (Rlightsensor == LIGHT && Llightsensor == DARK) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
+                LightFound = true;
+            } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
+                LightFound = true;
             }
             // send the info back to driver station using telemetry function.
             telemetry.addData("LED", bLedOn ? "On" : "Off");
@@ -223,7 +231,19 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(690);
+                sleep(750);
+                ForwardDone = true;
+            }
+            if (Rlightsensor == LIGHT && Llightsensor == DARK) {
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+                sleep(750);
+                ForwardDone = true;
+            }
+            if (Rlightsensor == DARK && Llightsensor == LIGHT) {
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+                sleep(750);
                 ForwardDone = true;
             }
 
@@ -255,8 +275,8 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
-                robot.leftMotor.setPower(-.12);
-                robot.rightMotor.setPower(.17);
+                robot.leftMotor.setPower(-.14);
+                robot.rightMotor.setPower(.19);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -278,9 +298,13 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
         byte[] range1Cache; //The read will return an array of bytes. They are stored in this variable
 
         while (opModeIsActive() && (runtime.milliseconds() <= 5000) && !WallFound) {
-
+            telemetry.addData("I reached the white line","Staring the range");
+            telemetry.update();
+            sleep(20);
             range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
-
+            telemetry.addData("I reached the white line","2");
+            telemetry.update();
+            sleep(20);
             telemetry.addData("Ultra Sonic", range1Cache[0] & 0xFF);
             telemetry.update();
 
@@ -411,16 +435,20 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(640);
+                sleep(750);
                 ForwardDone = true;
             }
             if (Rlightsensor == LIGHT && Llightsensor == DARK){
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
+                sleep(750);
+                ForwardDone = true;
             }
             if (Rlightsensor == DARK && Llightsensor == LIGHT){
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
+                sleep(750);
+                ForwardDone = true;
             }
 
             // send the info back to driver station using telemetry function.
