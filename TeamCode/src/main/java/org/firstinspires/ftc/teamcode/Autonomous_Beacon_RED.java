@@ -168,7 +168,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             robot.launcherMotor.setPower(-.3);
             sleep(2000);
             robot.launcherMotor.setPower(0);
-        // Find White Line from start position-=-=-=--=-=-=-
+       /* // Find White Line from start position-=-=-=--=-=-=-
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -547,7 +547,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             robot.leftMotor.setPower(0);
             sleep(1000000000);
         }
-    }
+    */}
 }
 
 
