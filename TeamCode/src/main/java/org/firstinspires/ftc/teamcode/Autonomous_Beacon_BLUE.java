@@ -276,7 +276,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
-                robot.leftMotor.setPower(.19);
+                robot.leftMotor.setPower(.25);
                 robot.rightMotor.setPower(-.14);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
@@ -462,8 +462,8 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && !Line) {
 
             if (!Line) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(-.17);
+                robot.leftMotor.setPower(.2);
+                robot.rightMotor.setPower(-.1);
                 sleep(1170);
                 Line = true;
             }
