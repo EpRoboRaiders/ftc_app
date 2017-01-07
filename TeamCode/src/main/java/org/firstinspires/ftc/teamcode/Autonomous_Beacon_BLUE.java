@@ -516,7 +516,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
             boolean Red2 = false;
             if (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green() && !Red2)
-                ;
+
             {
                 Red2 = true;
             }
