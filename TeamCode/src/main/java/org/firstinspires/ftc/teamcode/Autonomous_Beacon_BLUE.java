@@ -43,6 +43,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name = "BLUE Autonomous BEACON", group = "Pushbot")
 
 public class Autonomous_Beacon_BLUE extends LinearOpMode {
+    static private final boolean RED_DESIRED = false;
+
     public static final int RANGE1_REG_START = 0x04; //Register to start reading
     public static final int RANGE1_READ_LENGTH = 2; //Number of byte to read
     static final double MAX_POS = 0.1;     // Maximum rotational position
@@ -62,7 +64,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
     private int ReadBeacon(boolean BeaconRedDesired) {
         boolean FirstBeacon = false;
-        // Reading Color-=-=-=-=-=-=--=-=-=-
+        //Reading Color
         while (opModeIsActive() && !FirstBeacon) {  //Main loop of program
             robot.Lservo.setPosition(leftposition);
             robot.Rservo.setPosition(rightposition);
@@ -117,19 +119,6 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
             robot.leftMotor.setPower(.1);
             robot.rightMotor.setPower(.1);
 
-            do {
-                range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
-                UltraSonicDistance = range1Cache[0] & 0xFF;
-            } while (UltraSonicDistance > 9);
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-            sleep(1000);
-            robot.rightMotor.setPower(-.15);
-            robot.leftMotor.setPower(-.15);
-            sleep(2400);
-            robot.leftMotor.setPower(-.4);
-            robot.rightMotor.setPower(.1);
-            sleep(680);
             FirstBeacon = true;
         }
         robot.Lservo.setPosition(MAX_POS);
@@ -159,7 +148,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        // Shooter-=-=-=-=-=-=-
+        //Shooter
 
         //robot.leftMotor.setPower(.2);
         //robot.rightMotor.setPower(.2);
@@ -169,7 +158,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         //robot.launcherMotor.setPower(-.3);
         //sleep(2000);
         //robot.launcherMotor.setPower(0);
-        // Find White Line from start position-=-=-=--=-=-=-
+        // Find White Line from start position.
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -212,7 +201,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         }
         runtime.reset();
         boolean ForwardDone = false;
-        // Turning right and stop-=-=-=-=-=-=--=-=-=-
+        //Makes the robot sleep when it hits the white line, to line up for turning.
         while (opModeIsActive() && (runtime.milliseconds() < 2000) && !ForwardDone) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -259,6 +248,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
         runtime.reset();
         boolean Line = false;
+        //This turns the robot to line up in front of the beacon to push the buttons.
         while (opModeIsActive() && (runtime.milliseconds() < 5000) && !Line) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -297,7 +287,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         runtime.reset();
         boolean WallFound = false;
         byte[] range1Cache; //The read will return an array of bytes. They are stored in this variable
-
+        //This is the range sensor, to get to the right distance of the beacon.
         while (opModeIsActive() && (runtime.milliseconds() <= 5000) && !WallFound) {
 
             range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
@@ -373,11 +363,29 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         }
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
-        ReadBeacon(false); //
+
+        ReadBeacon(RED_DESIRED); //Does beacon code
+        range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
+        int UltraSonicDistance = range1Cache[0] & 0xFF;
+        do {
+            range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
+
+            UltraSonicDistance = range1Cache[0] & 0xFF;
+        } while (UltraSonicDistance > 9);
+
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        sleep(1000);
+        robot.rightMotor.setPower(-.15);
+        robot.leftMotor.setPower(-.15);
+        sleep(2400);
+        robot.leftMotor.setPower(-.4);
+        robot.rightMotor.setPower(.1);
+        sleep(680);
         runtime.reset();
         LightFound = false;
-
-        // Find White Line from start position-=-=-=--=-=-=-
+        //SECOND BEACON
+        //Find White Line from start position
         while (opModeIsActive() && (runtime.milliseconds() < 100000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -412,7 +420,7 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
         }
         runtime.reset();
         ForwardDone = false;
-        // Turning right and stop-=-=-=-=-=-=--=-=-=-
+        //Makes the robot sleep when it hits the white line, to line up for turning.
         while (opModeIsActive() && (runtime.milliseconds() < 2000) && !ForwardDone) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
             double Llightsensor = robot.leftlightSensor.getRawLightDetected();
@@ -459,94 +467,139 @@ public class Autonomous_Beacon_BLUE extends LinearOpMode {
 
         runtime.reset();
         Line = false;
-        while (opModeIsActive() && (runtime.milliseconds() < 1000000) && !Line) {
 
-            if (!Line) {
-                robot.leftMotor.setPower(.2);
-                robot.rightMotor.setPower(-.1);
-                sleep(1170);
+        //This turns the robot to line up in front of the beacon to push the buttons.
+        while (opModeIsActive() && (runtime.milliseconds() < 5000) && !Line) {
+            double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
+            double Llightsensor = robot.leftlightSensor.getRawLightDetected();
+
+            if (Llightsensor < 2.0) {
+                Llightsensor = DARK;
+            } else {
+                Llightsensor = LIGHT;
+            }
+
+            if (Rlightsensor < 2.0) {
+                Rlightsensor = DARK;
+            } else {
+                Rlightsensor = LIGHT;
+            }
+
+            if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
+                robot.leftMotor.setPower(.25);
+                robot.rightMotor.setPower(-.14);
+            } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
+                Line = true;
+            } else if (Rlightsensor == DARK && Llightsensor == LIGHT && !Line) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
                 Line = true;
             }
+            // send the info back to driver station using telemetry function.
+            telemetry.addData("LED1", bLedOn ? "On" : "Off");
+            telemetry.addData("Raw Left", Llightsensor);
+            telemetry.addData("Raw Right", Rlightsensor);
+            telemetry.update();
         }
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
         runtime.reset();
-        boolean SecondBeacon = false;
-        // Reading Color-=-=-=-=-=-=--=-=-=-
-        while (opModeIsActive() && !SecondBeacon) {  //Main loop of program
-            robot.Lservo.setPosition(leftposition);
-            robot.Rservo.setPosition(rightposition);
+        WallFound = false;
+
+        //This is the range sensor, to get to the right distance of the beacon.
+        while (opModeIsActive() && (runtime.milliseconds() <= 5000) && !WallFound) {
 
             range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
 
             telemetry.addData("Ultra Sonic", range1Cache[0] & 0xFF);
             telemetry.update();
 
-            int UltraSonicDistance = range1Cache[0] & 0xFF;
+            UltraSonicDistance = range1Cache[0] & 0xFF;
 
-            //display values
-            telemetry.addData("3 Red  ", robot.colorSensor.red());
-            telemetry.addData("4 Green", robot.colorSensor.green());
-            telemetry.addData("5 Blue ", robot.colorSensor.blue());
+            double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
+            double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
-            //illuminate the RED/BLUE LED on the Core Device Interface if the RED/BLUE value is greatest
-
-            robot.Lservo.setPosition(leftposition);
-            robot.Rservo.setPosition(rightposition);
-            runtime.reset();
-            boolean FirstPress = false;
-
-            if (UltraSonicDistance > 6 && runtime.milliseconds() < 1000 && !FirstPress) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(1400);
-                FirstPress = true;
+            if (Llightsensor < 2.0) {
+                Llightsensor = DARK;
+            } else {
+                Llightsensor = LIGHT;
             }
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-            sleep(400);
 
-            robot.leftMotor.setPower(-.1);
-            robot.rightMotor.setPower(-.1);
-            sleep(800);
-
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-            sleep(5000);
-
-            boolean Red2 = false;
-            if (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green() && !Red2)
-
-            {
-                Red2 = true;
+            if (Rlightsensor < 2.0) {
+                Rlightsensor = DARK;
+            } else {
+                Rlightsensor = LIGHT;
             }
-            boolean SecondPress = false;
-            if (Red2 && !SecondPress) ;
-            {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                telemetry.addData("I pressed the beacon again", "To make it blue");
-                telemetry.update();
-                sleep(1250);
-                SecondPress = true;
+            if (UltraSonicDistance == 255) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
             }
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
+            if (UltraSonicDistance > 14 && UltraSonicDistance < 16) {
+                robot.leftMotor.setPower(0);
+                robot.rightMotor.setPower(0);
+                WallFound = true;
+                //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-
+            } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
 
-            do {
-                range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
-                UltraSonicDistance = range1Cache[0] & 0xFF;
-            } while (UltraSonicDistance > 9);
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-            sleep(1000);
-            robot.rightMotor.setPower(-.1);
-            robot.leftMotor.setPower(-.1);
-            sleep(600);
-            robot.rightMotor.setPower(0);
-            robot.leftMotor.setPower(0);
-            sleep(1000000000);
+                robot.leftMotor.setPower(0.1);//forwards
+                robot.rightMotor.setPower(0.1);
+
+            } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == DARK) {
+
+                robot.leftMotor.setPower(0.1);//forwards
+                robot.rightMotor.setPower(0.1);
+
+            } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == DARK) {
+
+                robot.leftMotor.setPower(0.1);//forwards
+                robot.rightMotor.setPower(0.15);
+
+            } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == LIGHT) {
+
+                robot.leftMotor.setPower(0.15);//forwards
+                robot.rightMotor.setPower(0.1);
+                //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
+
+                robot.leftMotor.setPower(-.1); //backwards
+                robot.rightMotor.setPower(-.1);
+
+            } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == DARK) {
+
+                robot.leftMotor.setPower(-.1); //backwards
+                robot.rightMotor.setPower(-.1);
+
+            } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == DARK) {
+
+                robot.leftMotor.setPower(-.15); //backwards
+                robot.rightMotor.setPower(-.1);
+
+            } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == LIGHT) {
+                robot.leftMotor.setPower(-.1); //backwards
+                robot.rightMotor.setPower(-.15);
+            }   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
         }
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        runtime.reset();
+
+        ReadBeacon(RED_DESIRED); //Does beacon code
+
+        do {
+            range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
+            UltraSonicDistance = range1Cache[0] & 0xFF;
+        } while (UltraSonicDistance > 9);
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        sleep(1000);
+        robot.rightMotor.setPower(-.1);
+        robot.leftMotor.setPower(-.1);
+        sleep(600);
+        robot.rightMotor.setPower(0);
+        robot.leftMotor.setPower(0);
+        sleep(1000000000);
+
     }
 }
 
