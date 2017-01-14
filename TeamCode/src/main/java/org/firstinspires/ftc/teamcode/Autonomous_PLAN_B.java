@@ -106,7 +106,7 @@ public class Autonomous_PLAN_B extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        // Find White Line from Start position
+        //Hit cap ball & stop on middle platform.
         while (opModeIsActive() && (runtime.milliseconds() < 4000) && (LightFound == false)) {
             double Rlightsensor = rightlightSensor.getRawLightDetected();
             double Llightsensor = leftlightSensor.getRawLightDetected();

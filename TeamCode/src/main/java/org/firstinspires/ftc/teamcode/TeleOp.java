@@ -19,21 +19,16 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "DriveTeleOp", group = "Concept")
 //@Disabled
 public class TeleOp extends LinearOpMode {
-    static final double INCREMENT1 = 0.01;     // amount to slew servo each CYCLE_MS cycle
-    // static final int    CYCLE_MS    =   50;     // period of each cycle
+    static final double SERVO_INC = 0.01;     // amount to slew servo each CYCLE_MS cycle
     static final double MAX_POS = 0.1;     // Maximum rotational position
     static final double MIN_POS = 0.7;     // Minimum rotational position
     static final double LINE_FOLLOWER = .2;
     static final double LINE_TURN = .1;
-    static final double INCREMENT2 = .06;
+    static final double SWEEPER_INC = .06;
     static final double INCREMENT = 1;     // amount to ramp motor each CYCLE_MS cycle
     static final int CYCLE_MS = 0;     // period of each cycle
-    static final double MAX_FWD = 1.0;     // Maximum FWD power applied to motor
-    static final double MAX_REV = -1.0;     // Maximum REV power applied to motor
     static final int DARK = -54728;
     static final int LIGHT = -57278;
-    // double leftpower;
-    // double rightpower;
     LightSensor leftlightSensor;  // Hardware Device Object
     LightSensor rightlightSensor;
     LightSensor lightSensor;
@@ -45,13 +40,11 @@ public class TeleOp extends LinearOpMode {
     double position = (MAX_POS);
     double rightposition = MIN_POS;
     double leftposition = MIN_POS;
-    // Define class members
     DcMotor motor;
     double leftpower = 0;
     double rightpower = 0;
     double sweeper = 0;
     double launcher = 0;
-    boolean rampUp = true;
 
     HardwareK9bot robot = new HardwareK9bot();
     // HardwarePushbotEdited robot = new HardwarePushbotEdited();   // Use a Pushbot's hardware
@@ -70,19 +63,19 @@ public class TeleOp extends LinearOpMode {
         telemetry.addData(">", "Press Start to run Motors.");
         telemetry.update();
         waitForStart();
-
+            //Sweeper
         while (opModeIsActive()) {
             leftservo.setPosition(leftposition);
             rightservo.setPosition(rightposition);
 
             if (gamepad2.right_stick_y != sweeper) {
                 if (sweeper < gamepad2.right_stick_y) {
-                    sweeper += INCREMENT2;
+                    sweeper += SWEEPER_INC;
                     if (sweeper > gamepad2.right_stick_y) {
                         sweeper = gamepad2.right_stick_y;
                     }
                 } else {
-                    sweeper -= INCREMENT2;
+                    sweeper -= SWEEPER_INC;
                     if (sweeper < gamepad2.right_stick_y) {
                         sweeper = gamepad2.right_stick_y;
 
@@ -93,13 +86,13 @@ public class TeleOp extends LinearOpMode {
 
             //Servos
             if (gamepad2.dpad_right) {
-                leftposition -= INCREMENT1;
+                leftposition -= SERVO_INC;
                 if (leftposition <= MIN_POS) {
                     leftposition = MIN_POS;
                 }
             }
             if (!gamepad2.dpad_right) {
-                leftposition += INCREMENT1;
+                leftposition += SERVO_INC;
                 if (leftposition >= MAX_POS) {
                     leftposition = MAX_POS;
                 }
@@ -107,13 +100,13 @@ public class TeleOp extends LinearOpMode {
 
 
             if (!gamepad2.dpad_left) {
-                rightposition -= INCREMENT1;
+                rightposition -= SERVO_INC;
                 if (rightposition <= MIN_POS) {
                     rightposition = MIN_POS;
                 }
             }
             if (gamepad2.dpad_left) {
-                rightposition += INCREMENT1;
+                rightposition += SERVO_INC;
                 if (rightposition >= MAX_POS) {
                     rightposition = MAX_POS;
                 }
@@ -156,6 +149,7 @@ public class TeleOp extends LinearOpMode {
                     }
                 }
             }
+            //Backwards button
             if (opModeIsActive() && gamepad1.right_bumper) {
                 double Rlightsensor = rightlightSensor.getRawLightDetected();
                 double Llightsensor = leftlightSensor.getRawLightDetected();
@@ -193,6 +187,7 @@ public class TeleOp extends LinearOpMode {
 
                 telemetry.update();
             }
+            //Forwards button
             if (opModeIsActive() && gamepad1.left_bumper) {
                 double Rlightsensor = rightlightSensor.getRawLightDetected();
                 double Llightsensor = leftlightSensor.getRawLightDetected();

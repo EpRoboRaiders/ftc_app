@@ -44,10 +44,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
 
-    static final double INCREMENT3 = 1;
-    static final double INCREMENT2 = 0.6;
-    static final double FORWARD_SPEED1 = 0.2;
-    static final double TURN_SPEED1 = 0.1;
+    static final double INCREMENT1 = 1;
+    static final double FORWARD_SPEED = 0.2;
+    static final double TURN_SPEED = 0.1;
     static final double INCREMENT = 0.5;
     static final int DARK = -54728;
     static final int LIGHT = -57278;
@@ -111,7 +110,7 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        // Find White Line from Start position
+        //Turns from backwards position to line up by corner vortex.
         while (opModeIsActive() && (runtime.milliseconds() < 2550) && (LightFound == false)) {
             double Rlightsensor = rightlightSensor.getRawLightDetected();
             double Llightsensor = leftlightSensor.getRawLightDetected();
@@ -130,7 +129,7 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
 
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                leftMotor.setPower(-TURN_SPEED1);
+                leftMotor.setPower(-TURN_SPEED);
                 rightMotor.setPower(-INCREMENT);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 leftMotor.setPower(0);
@@ -153,9 +152,10 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
             telemetry.update();
         }
         runtime.reset();
+        //Goes backwards.
         while (runtime.milliseconds() < 300 && opModeIsActive()) {
-            leftMotor.setPower(-FORWARD_SPEED1);
-            rightMotor.setPower(-FORWARD_SPEED1);
+            leftMotor.setPower(-FORWARD_SPEED);
+            rightMotor.setPower(-FORWARD_SPEED);
         }
         runtime.reset();
         while (runtime.milliseconds() < 800 && opModeIsActive()) {
@@ -163,14 +163,15 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
             rightMotor.setPower(0);
         }
         runtime.reset();
+        //Shoot ball into corner.
         while (runtime.milliseconds() < 2000 && opModeIsActive()) {
             sweeper = -1;
             robot.sweeperMotor.setPower(sweeper);
         }
         runtime.reset();
         while (runtime.milliseconds() < 2000 && opModeIsActive()) {
-            leftMotor.setPower(-INCREMENT3);
-            rightMotor.setPower(-INCREMENT3);
+            leftMotor.setPower(-INCREMENT1);
+            rightMotor.setPower(-INCREMENT1);
         }
         runtime.reset();
         telemetry.update();
