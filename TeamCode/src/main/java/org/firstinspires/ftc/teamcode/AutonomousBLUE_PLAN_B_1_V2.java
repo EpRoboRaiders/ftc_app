@@ -40,11 +40,15 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-@Autonomous(name = "Neville", group = "Pushbot")
+@Autonomous(name = "BLUE Weasley", group = "Pushbot")
 
-public class Autonomous_PLAN_B extends LinearOpMode {
+public class AutonomousBLUE_PLAN_B_1_V2 extends LinearOpMode {
 
-    static final double FORWARD_SPEED1 = 0.2;
+
+    static final double INCREMENT1 = .23;
+    static final double FORWARD_SPEED = 0.2;
+    static final double TURN_SPEED = 0.1;
+    static final double INCREMENT = 0.67;
     static final int DARK = -54728;
     static final int LIGHT = -57278;
     public DcMotor leftMotor = null;
@@ -58,6 +62,7 @@ public class Autonomous_PLAN_B extends LinearOpMode {
     HardwarePushbotEdited robot = new HardwarePushbotEdited();   // Use a Pushbot's hardware
     com.qualcomm.robotcore.hardware.LightSensor leftlightSensor;  // Hardware Device Object
     com.qualcomm.robotcore.hardware.LightSensor rightlightSensor;
+    double sweeper = 0;
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
     @Override
@@ -110,13 +115,13 @@ public class Autonomous_PLAN_B extends LinearOpMode {
         while (opModeIsActive() && !DelayDone){
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
-            sleep(20000);
+            sleep(10000);
             DelayDone = true;
         }
         runtime.reset();
 
-        //Hit cap ball & stop on middle platform.
-        while (opModeIsActive() && (runtime.milliseconds() < 4000) && (LightFound == false)) {
+        //Turns from backwards position to line up by corner vortex.
+        while (opModeIsActive() && (runtime.milliseconds() < 3200) && (LightFound == false)) {
             double Rlightsensor = rightlightSensor.getRawLightDetected();
             double Llightsensor = leftlightSensor.getRawLightDetected();
 
@@ -134,8 +139,8 @@ public class Autonomous_PLAN_B extends LinearOpMode {
 
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                robot.leftMotor.setPower(FORWARD_SPEED1);
-                rightMotor.setPower(FORWARD_SPEED1);
+                leftMotor.setPower(-INCREMENT);
+                rightMotor.setPower(-TURN_SPEED);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
@@ -156,17 +161,26 @@ public class Autonomous_PLAN_B extends LinearOpMode {
 
             telemetry.update();
         }
-
-
+        runtime.reset();
+        while (runtime.milliseconds() < 300 && opModeIsActive()) {
+            leftMotor.setPower(0);
+            rightMotor.setPower(0);
+        }
+        runtime.reset();
+        //Shoot ball into corner.
+        while (runtime.milliseconds() < 2000 && opModeIsActive()) {
+            sweeper = -1;
+            robot.sweeperMotor.setPower(sweeper);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 3000 && opModeIsActive()) {
+            leftMotor.setPower(-INCREMENT1);
+            rightMotor.setPower(-INCREMENT1);
+        }
+        runtime.reset();
         telemetry.update();
         idle();
-        //       }
 
-        // Step 0:  Stop and close the claw.
-        // robot.leftMotor.setPower(0);
-        // robot.rightMotor.setPower(0);
-        //  robot.leftClaw.setPosition(1.0);
-        // robot.rightClaw.setPosition(0.0);
 
         //      telemetry.addData("Path", "Complete");
         //       telemetry.update();

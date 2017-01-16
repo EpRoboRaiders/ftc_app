@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-@Autonomous(name = "Neville", group = "Pushbot")
+@Autonomous(name = "Longbottom", group = "Pushbot")
 
-public class Autonomous_PLAN_B extends LinearOpMode {
+public class Autonomous_PLAN_B_V2 extends LinearOpMode {
 
     static final double FORWARD_SPEED1 = 0.2;
     static final int DARK = -54728;
@@ -106,14 +106,9 @@ public class Autonomous_PLAN_B extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        boolean DelayDone = false;
-        while (opModeIsActive() && !DelayDone){
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-            sleep(20000);
-            DelayDone = true;
-        }
-        runtime.reset();
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        sleep(20000);
 
         //Hit cap ball & stop on middle platform.
         while (opModeIsActive() && (runtime.milliseconds() < 4000) && (LightFound == false)) {
