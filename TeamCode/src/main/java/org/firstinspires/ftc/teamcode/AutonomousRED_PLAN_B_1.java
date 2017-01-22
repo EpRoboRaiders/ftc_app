@@ -44,7 +44,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
 
-
     static final double INCREMENT1 = .23;
     static final double FORWARD_SPEED = 0.2;
     static final double TURN_SPEED = 0.1;

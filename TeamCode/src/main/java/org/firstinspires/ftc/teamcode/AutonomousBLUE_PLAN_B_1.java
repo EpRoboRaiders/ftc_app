@@ -44,7 +44,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
 
-
     static final double INCREMENT1 = .23;
     static final double FORWARD_SPEED = 0.2;
     static final double TURN_SPEED = 0.1;
@@ -113,44 +112,8 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
 
         //Turns from backwards position to line up by corner vortex.
         while (opModeIsActive() && (runtime.milliseconds() < 3050) && (LightFound == false)) {
-            double Rlightsensor = rightlightSensor.getRawLightDetected();
-            double Llightsensor = leftlightSensor.getRawLightDetected();
-
-            if (Llightsensor < 2.0) {
-                Llightsensor = DARK;
-            } else {
-                Llightsensor = LIGHT;
-            }
-
-            if (Rlightsensor < 2.0) {
-                Rlightsensor = DARK;
-            } else {
-                Rlightsensor = LIGHT;
-            }
-
-
-            if (Rlightsensor == DARK && Llightsensor == DARK) {
                 leftMotor.setPower(-TURN_SPEED);
                 rightMotor.setPower(-INCREMENT);
-            } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            }
-            // send the info back to driver station using telemetry function.
-            telemetry.addData("LED", bLedOn ? "On" : "Off");
-            telemetry.addData("Raw", leftlightSensor.getRawLightDetected());
-            telemetry.addData("Normal", leftlightSensor.getLightDetected());
-
-            telemetry.update();
         }
         runtime.reset();
         while (runtime.milliseconds() < 300 && opModeIsActive()) {

@@ -104,38 +104,11 @@ public class Autonomous_PLAN_B extends LinearOpMode {
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
         runtime.reset();
-        boolean LightFound = false;
-
-        runtime.reset();
 
         //Hit cap ball & stop on middle platform.
-        while (opModeIsActive() && (runtime.milliseconds() < 4000) && (LightFound == false)) {
-            double Rlightsensor = rightlightSensor.getRawLightDetected();
-            double Llightsensor = leftlightSensor.getRawLightDetected();
-
-            if (Llightsensor < 2.0) {
-                Llightsensor = DARK;
-            } else {
-                Llightsensor = LIGHT;
-            }
-
-            if (Rlightsensor < 2.0) {
-                Rlightsensor = DARK;
-            } else {
-                Rlightsensor = LIGHT;
-            }
-
-
-            if (Rlightsensor == DARK && Llightsensor == DARK) {
+        while (opModeIsActive() && (runtime.milliseconds() < 4000)) {
                 robot.leftMotor.setPower(FORWARD_SPEED1);
                 rightMotor.setPower(FORWARD_SPEED1);
-            }
-            // send the info back to driver station using telemetry function.
-            telemetry.addData("LED", bLedOn ? "On" : "Off");
-            telemetry.addData("Raw", leftlightSensor.getRawLightDetected());
-            telemetry.addData("Normal", leftlightSensor.getLightDetected());
-
-            telemetry.update();
         }
 
 
