@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.LightSensor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "DriveTeleOp", group = "Concept")
+@com.qualcomm .robotcore.eventloop.opmode.TeleOp(name = "DriveTeleOp", group = "Concept")
 //@Disabled
 public class TeleOp extends LinearOpMode {
     static final double SERVO_INC = 0.01;     // amount to slew servo each CYCLE_MS cycle

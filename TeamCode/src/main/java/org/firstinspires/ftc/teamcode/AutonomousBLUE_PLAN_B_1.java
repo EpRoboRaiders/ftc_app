@@ -48,7 +48,7 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
     static final double INCREMENT1 = .23;
     static final double FORWARD_SPEED = 0.2;
     static final double TURN_SPEED = 0.1;
-    static final double INCREMENT = 0.67;
+    static final double INCREMENT = 0.3;
     static final int DARK = -54728;
     static final int LIGHT = -57278;
     public DcMotor leftMotor = null;
@@ -112,7 +112,7 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
         boolean LightFound = false;
 
         //Turns from backwards position to line up by corner vortex.
-        while (opModeIsActive() && (runtime.milliseconds() < 3200) && (LightFound == false)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 3050) && (LightFound == false)) {
             double Rlightsensor = rightlightSensor.getRawLightDetected();
             double Llightsensor = leftlightSensor.getRawLightDetected();
 
@@ -130,8 +130,8 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
 
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                leftMotor.setPower(-INCREMENT);
-                rightMotor.setPower(-TURN_SPEED);
+                leftMotor.setPower(-TURN_SPEED);
+                rightMotor.setPower(-INCREMENT);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);

@@ -47,8 +47,8 @@ public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
 
     static final double INCREMENT1 = .23;
     static final double FORWARD_SPEED = 0.2;
-    static final double TURN_SPEED = 0.14;
-    static final double INCREMENT = 0.67;
+    static final double TURN_SPEED = 0.1;
+    static final double INCREMENT = 0.6;
     static final int DARK = -54728;
     static final int LIGHT = -57278;
     public DcMotor leftMotor = null;
@@ -109,48 +109,11 @@ public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
         runtime.reset();
-        boolean LightFound = false;
 
         //Turns from backwards position to line up by corner vortex.
-        while (opModeIsActive() && (runtime.milliseconds() < 3200) && (LightFound == false)) {
-            double Rlightsensor = rightlightSensor.getRawLightDetected();
-            double Llightsensor = leftlightSensor.getRawLightDetected();
-
-            if (Llightsensor < 2.0) {
-                Llightsensor = DARK;
-            } else {
-                Llightsensor = LIGHT;
-            }
-
-            if (Rlightsensor < 2.0) {
-                Rlightsensor = DARK;
-            } else {
-                Rlightsensor = LIGHT;
-            }
-
-
-            if (Rlightsensor == DARK && Llightsensor == DARK) {
-                leftMotor.setPower(-TURN_SPEED);
-                rightMotor.setPower(-INCREMENT);
-            } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            }
-            // send the info back to driver station using telemetry function.
-            telemetry.addData("LED", bLedOn ? "On" : "Off");
-            telemetry.addData("Raw", leftlightSensor.getRawLightDetected());
-            telemetry.addData("Normal", leftlightSensor.getLightDetected());
-
-            telemetry.update();
+        while (opModeIsActive() && (runtime.milliseconds() < 30050)) {
+                leftMotor.setPower(-INCREMENT);
+                rightMotor.setPower(-TURN_SPEED);
         }
         runtime.reset();
         while (runtime.milliseconds() < 300 && opModeIsActive()) {

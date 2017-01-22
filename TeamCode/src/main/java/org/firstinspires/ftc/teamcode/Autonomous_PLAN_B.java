@@ -106,13 +106,6 @@ public class Autonomous_PLAN_B extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        boolean DelayDone = false;
-        while (opModeIsActive() && !DelayDone){
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-            sleep(20000);
-            DelayDone = true;
-        }
         runtime.reset();
 
         //Hit cap ball & stop on middle platform.
@@ -136,18 +129,6 @@ public class Autonomous_PLAN_B extends LinearOpMode {
             if (Rlightsensor == DARK && Llightsensor == DARK) {
                 robot.leftMotor.setPower(FORWARD_SPEED1);
                 rightMotor.setPower(FORWARD_SPEED1);
-            } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
-            } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                leftMotor.setPower(0);
-                rightMotor.setPower(0);
-                LightFound = true;
             }
             // send the info back to driver station using telemetry function.
             telemetry.addData("LED", bLedOn ? "On" : "Off");

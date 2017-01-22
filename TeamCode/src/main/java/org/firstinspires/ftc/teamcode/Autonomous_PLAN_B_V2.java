@@ -106,9 +106,14 @@ public class Autonomous_PLAN_B_V2 extends LinearOpMode {
         runtime.reset();
         boolean LightFound = false;
 
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-        sleep(20000);
+        boolean DelayDone = false;
+        while (opModeIsActive() && !DelayDone){
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+            sleep(20000);
+            DelayDone = true;
+        }
+        runtime.reset();
 
         //Hit cap ball & stop on middle platform.
         while (opModeIsActive() && (runtime.milliseconds() < 4000) && (LightFound == false)) {
