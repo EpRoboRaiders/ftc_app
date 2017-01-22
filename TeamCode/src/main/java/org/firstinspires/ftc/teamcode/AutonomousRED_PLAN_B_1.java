@@ -111,7 +111,7 @@ public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
         runtime.reset();
 
         //Turns from backwards position to line up by corner vortex.
-        while (opModeIsActive() && (runtime.milliseconds() < 30050)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 3050)) {
                 leftMotor.setPower(-INCREMENT);
                 rightMotor.setPower(-TURN_SPEED);
         }

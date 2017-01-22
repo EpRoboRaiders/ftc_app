@@ -48,7 +48,7 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
     static final double INCREMENT1 = .23;
     static final double FORWARD_SPEED = 0.2;
     static final double TURN_SPEED = 0.1;
-    static final double INCREMENT = 0.3;
+    static final double INCREMENT = 0.6;
     static final int DARK = -54728;
     static final int LIGHT = -57278;
     public DcMotor leftMotor = null;
