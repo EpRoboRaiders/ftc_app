@@ -108,16 +108,27 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
                 telemetry.addData("1 - Beacon is ", (SensorRed) ? "RED" : "BLUE");
                 telemetry.update();
             }
-
-            if ((!SensorRed && BeaconRedDesired) ||
-                    (SensorRed && !BeaconRedDesired)) {
+            boolean RColorDone = false;
+            boolean LColorDone = false;
+            if ((!SensorRed && BeaconRedDesired) || (SensorRed && !BeaconRedDesired) && !RColorDone) {
                 robot.Lservo.setPosition(MIN_POS); // Left Up
                 robot.Rservo.setPosition(MIN_POS); // Right Down
-            }
 
-            robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(.1);
-            sleep(900);
+                robot.leftMotor.setPower(.1);
+                robot.leftMotor.setPower(.1);
+                sleep(1000);
+                RColorDone = true;
+            } else if ((SensorRed && BeaconRedDesired) || (!SensorRed && !BeaconRedDesired) && !LColorDone) {
+                robot.Lservo.setPosition(MAX_POS); // Left Down
+                robot.Rservo.setPosition(MAX_POS); // Right Up
+
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+                sleep(1000);
+                LColorDone = true;
+            }
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
             FirstBeacon = true;
         }
         robot.Lservo.setPosition(MAX_POS);
@@ -175,8 +186,8 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.17);
-                robot.rightMotor.setPower(.2);
+                robot.leftMotor.setPower(.2);
+                robot.rightMotor.setPower(.23);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -217,19 +228,19 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(920);
+                robot.leftMotor.setPower(.15);
+                robot.rightMotor.setPower(.15);
+                sleep(800);
                 ForwardDone = true;
             } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(920);
+                robot.leftMotor.setPower(.15);
+                robot.rightMotor.setPower(.15);
+                sleep(800);
                 ForwardDone = true;
             } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(920);
+                robot.leftMotor.setPower(.15);
+                robot.rightMotor.setPower(.15);
+                sleep(800);
                 ForwardDone = true;
             }
 
@@ -263,7 +274,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
                 robot.leftMotor.setPower(-.1);
-                robot.rightMotor.setPower(.27);
+                robot.rightMotor.setPower(.21);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -402,8 +413,8 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.16);
-                robot.rightMotor.setPower(.2);
+                robot.leftMotor.setPower(.2);
+                robot.rightMotor.setPower(.23);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -437,21 +448,21 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(880);
+                robot.leftMotor.setPower(.15);
+                robot.rightMotor.setPower(.15);
+                sleep(800);
                 ForwardDone = true;
             }
             if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(880);
+                robot.leftMotor.setPower(.15);
+                robot.rightMotor.setPower(.15);
+                sleep(800);
                 ForwardDone = true;
             }
             if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(880);
+                robot.leftMotor.setPower(.15);
+                robot.rightMotor.setPower(.15);
+                sleep(800);
                 ForwardDone = true;
             }
 
@@ -486,7 +497,7 @@ public class Autonomous_Beacon_RED extends LinearOpMode {
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
                 robot.leftMotor.setPower(-.1);
-                robot.rightMotor.setPower(.27);
+                robot.rightMotor.setPower(.21);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);

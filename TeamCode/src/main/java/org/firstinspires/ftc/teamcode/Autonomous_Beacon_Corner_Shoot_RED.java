@@ -115,7 +115,7 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
                 robot.Rservo.setPosition(MIN_POS); // Right Down
 
                 robot.leftMotor.setPower(.1);
-                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
                 sleep(900);
             } else {
                 robot.Lservo.setPosition(MAX_POS); // Left Down
@@ -216,21 +216,21 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.15);
-                robot.rightMotor.setPower(.15);
-                sleep(820);
+                robot.leftMotor.setPower(.13);
+                robot.rightMotor.setPower(.13);
+                sleep(770);
                 ForwardDone = true;
             }
             if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.15);
-                robot.rightMotor.setPower(.15);
-                sleep(820);
+                robot.leftMotor.setPower(.13);
+                robot.rightMotor.setPower(.13);
+                sleep(770);
                 ForwardDone = true;
             }
             if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.15);
-                robot.rightMotor.setPower(.15);
-                sleep(820);
+                robot.leftMotor.setPower(.13);
+                robot.rightMotor.setPower(.13);
+                sleep(770);
                 ForwardDone = true;
             }
 
@@ -263,8 +263,8 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK && !Line) {
-                robot.leftMotor.setPower(-.14);
-                robot.rightMotor.setPower(.25);
+                robot.leftMotor.setPower(-.13);
+                robot.rightMotor.setPower(.23);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT && !Line) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -295,7 +295,7 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
 
             telemetry.addData("Ultra Sonic", range1Cache[0] & 0xFF);
             telemetry.update();
-
+            sleep(100);
             int UltraSonicDistance = range1Cache[0] & 0xFF;
 
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
@@ -322,64 +322,64 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
                 WallFound = true;
                 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-
             } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-
+                sleep(80);
                 robot.leftMotor.setPower(0.1);//forwards
                 robot.rightMotor.setPower(0.1);
 
             } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == DARK) {
-
+                sleep(80);
                 robot.leftMotor.setPower(0.1);//forwards
                 robot.rightMotor.setPower(0.1);
 
             } else if (UltraSonicDistance > 16 && Rlightsensor == LIGHT && Llightsensor == DARK) {
-
+                sleep(80);
                 robot.leftMotor.setPower(0.1);//forwards
-                robot.rightMotor.setPower(0.15);
+                robot.rightMotor.setPower(0.13);
 
             } else if (UltraSonicDistance > 16 && Rlightsensor == DARK && Llightsensor == LIGHT) {
-
-                robot.leftMotor.setPower(0.15);//forwards
+                sleep(80);
+                robot.leftMotor.setPower(0.13);//forwards
                 robot.rightMotor.setPower(0.1);
                 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
             } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-
+                sleep(80);
                 robot.leftMotor.setPower(-.1); //backwards
                 robot.rightMotor.setPower(-.1);
 
             } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == DARK) {
-
+                sleep(80);
                 robot.leftMotor.setPower(-.1); //backwards
                 robot.rightMotor.setPower(-.1);
 
             } else if (UltraSonicDistance < 14 && Rlightsensor == LIGHT && Llightsensor == DARK) {
-
-                robot.leftMotor.setPower(-.15); //backwards
+                sleep(80);
+                robot.leftMotor.setPower(-.13); //backwards
                 robot.rightMotor.setPower(-.1);
 
             } else if (UltraSonicDistance < 14 && Rlightsensor == DARK && Llightsensor == LIGHT) {
+                sleep(80);
                 robot.leftMotor.setPower(-.1); //backwards
-                robot.rightMotor.setPower(-.15);
+                robot.rightMotor.setPower(-.13);
             }   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
         }
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
 
-        ReadBeacon(RED_DESIRED); //Does beacon code
+        //ReadBeacon(RED_DESIRED); //Does beacon code
         range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
         int UltraSonicDistance = range1Cache[0] & 0xFF;
-        do {
-            range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
-
-            UltraSonicDistance = range1Cache[0] & 0xFF;
-        } while (UltraSonicDistance > 9);
+       // do {
+       //    range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
+       //     UltraSonicDistance = range1Cache[0] & 0xFF;
+       // } while (UltraSonicDistance > 9);
 
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
         sleep(1000);
-        robot.rightMotor.setPower(-.7);
+        robot.rightMotor.setPower(-.73);
         robot.leftMotor.setPower(-.1);
-        sleep(2400);
+        sleep(2700);
         robot.rightMotor.setPower(0);
         robot.leftMotor.setPower(0);
         sleep(100);

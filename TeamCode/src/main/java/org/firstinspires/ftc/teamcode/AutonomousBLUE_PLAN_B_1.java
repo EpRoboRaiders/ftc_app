@@ -111,7 +111,7 @@ public class AutonomousBLUE_PLAN_B_1 extends LinearOpMode {
         boolean LightFound = false;
 
         //Turns from backwards position to line up by corner vortex.
-        while (opModeIsActive() && (runtime.milliseconds() < 3050) && (LightFound == false)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 3100) && (LightFound == false)) {
                 leftMotor.setPower(-TURN_SPEED);
                 rightMotor.setPower(-INCREMENT);
         }

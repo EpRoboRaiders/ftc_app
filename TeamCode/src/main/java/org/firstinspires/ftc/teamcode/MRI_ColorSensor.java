@@ -80,9 +80,11 @@ public class MRI_ColorSensor extends LinearOpMode {
             if (colorSensor.red() > colorSensor.blue() && colorSensor.red() > colorSensor.green()) {
                 CDI.setLED(1, true);           //Red ON
                 CDI.setLED(0, false);          //Blue OFF
+                telemetry.addData("RED","");
             } else if (colorSensor.blue() > colorSensor.red() && colorSensor.blue() > colorSensor.green()) {
                 CDI.setLED(1, false);          //Red OFF
                 CDI.setLED(0, true);           //Blue ON
+                telemetry.addData("BLUE","");
             } else {
                 CDI.setLED(1, false);           //Red OFF
                 CDI.setLED(0, false);           //Blue OFF
