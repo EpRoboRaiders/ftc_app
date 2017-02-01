@@ -38,6 +38,7 @@ public class HardwarePushbotEdited {
     public Servo Rservo = null;
     public Servo Lservo = null;
     public DcMotor launcherMotor = null;
+    public DcMotor launcher2Motor = null;
     public com.qualcomm.robotcore.hardware.LightSensor leftlightSensor = null;  // Hardware Device Object
     public com.qualcomm.robotcore.hardware.LightSensor rightlightSensor = null;
     public I2cDevice RANGE1 = null;
@@ -57,6 +58,7 @@ public class HardwarePushbotEdited {
 
         // Define and Initialize Motors
         launcherMotor = hwMap.dcMotor.get("launcher");
+        launcher2Motor = hwMap.dcMotor.get("l2");
         leftMotor = hwMap.dcMotor.get("left motor");
         rightMotor = hwMap.dcMotor.get("right motor");
         sweeperMotor = hwMap.dcMotor.get("sweeper");
@@ -77,6 +79,7 @@ public class HardwarePushbotEdited {
         rightMotor.setPower(0);
         sweeperMotor.setPower(0);
         launcherMotor.setPower(0);
+        launcher2Motor.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.

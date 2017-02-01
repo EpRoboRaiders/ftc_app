@@ -45,9 +45,10 @@ public class TeleOp extends LinearOpMode {
     double rightpower = 0;
     double sweeper = 0;
     double launcher = 0;
+    double launcher2 = 0;
 
-    HardwareK9bot robot = new HardwareK9bot();
-    // HardwarePushbotEdited robot = new HardwarePushbotEdited();   // Use a Pushbot's hardware
+
+     HardwarePushbotEdited robot = new HardwarePushbotEdited();   // Use a Pushbot's hardware
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -119,6 +120,13 @@ public class TeleOp extends LinearOpMode {
             }
             if (!gamepad2.x){
                 launcher = 0;
+            }
+            //Launcher 2
+            if(gamepad2.y){
+                launcher2 = 1;
+            }
+            if (!gamepad2.y){
+                launcher2 = 0;
             }
 
             //Start of Driving
@@ -231,6 +239,7 @@ public class TeleOp extends LinearOpMode {
             robot.rightMotor.setPower(rightpower);
             robot.sweeperMotor.setPower(sweeper);
             robot.launcherMotor.setPower(launcher);
+            robot.launcher2Motor.setPower(launcher2);
             // Set the motor to the new power and pause;
 
             sleep(CYCLE_MS);

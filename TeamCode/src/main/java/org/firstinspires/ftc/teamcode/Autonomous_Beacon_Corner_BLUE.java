@@ -34,9 +34,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.I2cAddr;
-import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
-import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
+import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
@@ -77,6 +76,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             int UltraSonicDistance = range1Cache[0] & 0xFF;
 
             //display values
+            telemetry.addData("2 Clear", robot.colorSensor.alpha());
             telemetry.addData("3 Red  ", robot.colorSensor.red());
             telemetry.addData("4 Green", robot.colorSensor.green());
             telemetry.addData("5 Blue ", robot.colorSensor.blue());
@@ -85,28 +85,32 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
 
             robot.Lservo.setPosition(leftposition);
             robot.Rservo.setPosition(rightposition);
+            sleep(1000);
 
             boolean SensorRed = false;
-            if (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green()) {
-                SensorRed = true;
-            }
+                if ((robot.colorSensor.red() > robot.colorSensor.blue()) || (robot.colorSensor.red() > robot.colorSensor.green())) {
+                    SensorRed = true;
+                }
 
             telemetry.addData("0 - Beacon is ", (SensorRed) ? "RED" : "BLUE");
             telemetry.update();
 
             runtime.reset();
-            while (runtime.seconds() <= 1) {
-                if (robot.colorSensor.red() > robot.colorSensor.blue() && robot.colorSensor.red() > robot.colorSensor.green() && !SensorRed) {
+            boolean Check = false;
+            while ((runtime.milliseconds() <= 2000) && !Check) {
+                if ((robot.colorSensor.red() > robot.colorSensor.blue()) &&
+                        (robot.colorSensor.red() > robot.colorSensor.green() && !SensorRed)) {
                     SensorRed = true;
                     runtime.reset();
-                } else if (robot.colorSensor.blue() > robot.colorSensor.red() && robot.colorSensor.blue() > robot.colorSensor.green() && SensorRed) {
+                } else if ((robot.colorSensor.blue() > robot.colorSensor.red()) &&
+                        (robot.colorSensor.blue() > robot.colorSensor.green() && SensorRed)) {
                     SensorRed = false;
                     runtime.reset();
                 }
-
                 telemetry.addData("1", "Waiting %2.5f S Elapsed", runtime.seconds());
                 telemetry.addData("1 - Beacon is ", (SensorRed) ? "RED" : "BLUE");
                 telemetry.update();
+                Check = true;
             }
 
             if ((!SensorRed && BeaconRedDesired) ||
@@ -116,14 +120,14 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
 
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(900);
+                sleep(1200);
             } else {
                 robot.Lservo.setPosition(MAX_POS); // Left Down
                 robot.Rservo.setPosition(MAX_POS); // Right Up
 
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(900);
+                sleep(1200);
             }
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
@@ -154,7 +158,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         robot.colorSensor.enableLed(LEDState);
 
         runtime.reset();
-        boolean LightFound = false;
+        boolean LightFound = false;;
 
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
@@ -216,21 +220,21 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             }
 
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.15);
-                robot.rightMotor.setPower(.15);
-                sleep(770);
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+                sleep(680);
                 ForwardDone = true;
             }
             if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.15);
-                robot.rightMotor.setPower(.15);
-                sleep(770);
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+                sleep(680);
                 ForwardDone = true;
             }
             if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.15);
-                robot.rightMotor.setPower(.15);
-                sleep(770);
+                robot.leftMotor.setPower(.1);
+                robot.rightMotor.setPower(.1);
+                sleep(680);
                 ForwardDone = true;
             }
 
@@ -366,7 +370,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
 
-        //ReadBeacon(RED_DESIRED); //Does beacon code
+        ReadBeacon(RED_DESIRED); //Does beacon code
         range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
         int UltraSonicDistance = range1Cache[0] & 0xFF;
         // do {
@@ -377,16 +381,16 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
         sleep(1000);
-        robot.rightMotor.setPower(-.12);
-        robot.leftMotor.setPower(-.73);
-        sleep(2600);
+        robot.rightMotor.setPower(-.1);
+        robot.leftMotor.setPower(-1);
+        sleep(2200);
         robot.rightMotor.setPower(0);
         robot.leftMotor.setPower(0);
         sleep(100);
-        robot.sweeperMotor.setPower(-1);
-        sleep(2000);
         robot.rightMotor.setPower(-.2);
         robot.leftMotor.setPower(-.2);
+        sleep(2000);
+        robot.sweeperMotor.setPower(-1);
         sleep(2000);
         runtime.reset();
         LightFound = false;
