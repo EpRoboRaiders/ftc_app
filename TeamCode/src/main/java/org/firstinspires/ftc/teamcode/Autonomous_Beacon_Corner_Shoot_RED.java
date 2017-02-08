@@ -171,12 +171,12 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
         boolean Shoot = false;
         while (opModeIsActive() && runtime.milliseconds() < 6000 && !Shoot) {
             robot.leftMotor.setPower(.2);
-            robot.rightMotor.setPower(.23);
-            sleep(2000);
+            robot.rightMotor.setPower(.2);
+            sleep(2400);
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
             sleep(1000);
-            robot.launcher2Motor.setPower(1);
+            robot.launcher2Motor.setPower(.1);
             sleep(1000);
             robot.launcher2Motor.setPower(0);
             robot.leftMotor.setPower(0);
@@ -201,7 +201,7 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
                 robot.leftMotor.setPower(.2);
-                robot.rightMotor.setPower(.23);
+                robot.rightMotor.setPower(.2);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -242,21 +242,21 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(760);
+                robot.leftMotor.setPower(.13);
+                robot.rightMotor.setPower(.13);
+                sleep(800);
                 ForwardDone = true;
             }
             if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(760);
+                robot.leftMotor.setPower(.13);
+                robot.rightMotor.setPower(.13);
+                sleep(800);
                 ForwardDone = true;
             }
             if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(760);
+                robot.leftMotor.setPower(.13);
+                robot.rightMotor.setPower(.13);
+                sleep(800);
                 ForwardDone = true;
             }
 
@@ -399,25 +399,78 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
         //    range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
         //     UltraSonicDistance = range1Cache[0] & 0xFF;
         // } while (UltraSonicDistance > 9);
-
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-        sleep(1000);
-        robot.rightMotor.setPower(-1);
-        robot.leftMotor.setPower(-.1);
-        sleep(2240);
-        robot.rightMotor.setPower(0);
-        robot.leftMotor.setPower(0);
-        sleep(100);
-        robot.rightMotor.setPower(-.24);
-        robot.leftMotor.setPower(-.2);
-        sleep(2200);
-        robot.sweeperMotor.setPower(-1);
-        sleep(2000);
+        while (opModeIsActive() && (runtime.milliseconds() < 640)) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(-.5);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 300 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1250 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.1);
+            robot.rightMotor.setPower(-.1);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1200 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(-.7);
+        }
+        while (runtime.milliseconds() < 3000 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.2);
+            robot.rightMotor.setPower(-.2);
+        }
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        while (runtime.milliseconds() < 1700 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.4);
+            robot.rightMotor.setPower(-.4);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 800 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 900 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(-.3);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.5);
+            robot.rightMotor.setPower(-.5);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        //Shoot ball into corner.
+        boolean SDone = false;
+        while (runtime.milliseconds() < 1000 && opModeIsActive() && !SDone) {
+            robot.sweeperMotor.setPower(-1);
+            SDone = true;
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(-1);
+            robot.rightMotor.setPower(-1);
+        }
         runtime.reset();
         LightFound = false;
 
-        robot.launcher2Motor.setPower(0);
+
         robot.sweeperMotor.setPower(0);
         robot.rightMotor.setPower(0);
         robot.leftMotor.setPower(0);

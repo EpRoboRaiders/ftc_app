@@ -29,18 +29,12 @@ public class TeleOp extends LinearOpMode {
     static final int CYCLE_MS = 0;     // period of each cycle
     static final int DARK = -54728;
     static final int LIGHT = -57278;
-    LightSensor leftlightSensor;  // Hardware Device Object
-    LightSensor rightlightSensor;
-    LightSensor lightSensor;
+
 
     // Define class members
-    com.qualcomm.robotcore.hardware.Servo leftservo;
-    com.qualcomm.robotcore.hardware.Servo rightservo;
-
     double position = (MAX_POS);
     double rightposition = MIN_POS;
     double leftposition = MIN_POS;
-    DcMotor motor;
     double leftpower = 0;
     double rightpower = 0;
     double sweeper = 0;
@@ -53,12 +47,7 @@ public class TeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         boolean bLedOn = true;
-        leftservo = hardwareMap.servo.get("left claw");
-        rightservo = hardwareMap.servo.get("right claw");
-        leftlightSensor = hardwareMap.lightSensor.get("left light sensor");
-        rightlightSensor = hardwareMap.lightSensor.get("right light sensor");
-        // Connect to motor (Assume standard left wheel)
-        // Change the text in quotes to match any motor name on your robot.
+
         robot.init(hardwareMap);
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors.");
@@ -66,8 +55,8 @@ public class TeleOp extends LinearOpMode {
         waitForStart();
             //Sweeper
         while (opModeIsActive()) {
-            leftservo.setPosition(leftposition);
-            rightservo.setPosition(rightposition);
+            robot.Lservo.setPosition(leftposition);
+            robot.Rservo.setPosition(rightposition);
 
             if (gamepad2.right_stick_y != sweeper) {
                 if (sweeper < gamepad2.right_stick_y) {
@@ -115,12 +104,12 @@ public class TeleOp extends LinearOpMode {
 
 
             //Launcher
-            if(gamepad2.x){
-                launcher = -.3;
-            }
-            if (!gamepad2.x){
-                launcher = 0;
-            }
+//            if(gamepad2.x){
+//                launcher = -.3;
+//            }
+//            if (!gamepad2.x){
+//                launcher = 0;
+//            }
             //Launcher 2
             if(gamepad2.y){
                 launcher2 = 1;
@@ -159,8 +148,8 @@ public class TeleOp extends LinearOpMode {
             }
             //Backwards button
             if (opModeIsActive() && gamepad1.right_bumper) {
-                double Rlightsensor = rightlightSensor.getRawLightDetected();
-                double Llightsensor = leftlightSensor.getRawLightDetected();
+                double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
+                double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
                 if (Llightsensor < 2.0) {
                     Llightsensor = DARK;
@@ -190,15 +179,15 @@ public class TeleOp extends LinearOpMode {
                 }
                 // send the info back to driver station using telemetry function.
                 telemetry.addData("LED", bLedOn ? "On" : "Off");
-                telemetry.addData("Raw", leftlightSensor.getRawLightDetected());
-                telemetry.addData("Normal", leftlightSensor.getLightDetected());
+                telemetry.addData("Raw", robot.leftlightSensor.getRawLightDetected());
+                telemetry.addData("Normal", robot.leftlightSensor.getLightDetected());
 
                 telemetry.update();
             }
             //Forwards button
             if (opModeIsActive() && gamepad1.left_bumper) {
-                double Rlightsensor = rightlightSensor.getRawLightDetected();
-                double Llightsensor = leftlightSensor.getRawLightDetected();
+                double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
+                double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
                 if (Llightsensor < 2.0) {
                     Llightsensor = DARK;
@@ -228,15 +217,15 @@ public class TeleOp extends LinearOpMode {
                 }
                 // send the info back to driver station using telemetry function.
                 telemetry.addData("LED", bLedOn ? "On" : "Off");
-                telemetry.addData("Raw", leftlightSensor.getRawLightDetected());
-                telemetry.addData("Normal", leftlightSensor.getLightDetected());
+                telemetry.addData("Raw", robot.leftlightSensor.getRawLightDetected());
+                telemetry.addData("Normal", robot.leftlightSensor.getLightDetected());
 
                 telemetry.update();
             }
             telemetry.addData(">", "Set Power 1.");
             telemetry.update();
-            robot.leftMotor.setPower(leftpower);
-            robot.rightMotor.setPower(rightpower);
+            robot.leftMotor.setPower(-leftpower);
+            robot.rightMotor.setPower(-rightpower);     //Motors are reversed :(
             robot.sweeperMotor.setPower(sweeper);
             robot.launcherMotor.setPower(launcher);
             robot.launcher2Motor.setPower(launcher2);

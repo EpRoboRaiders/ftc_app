@@ -47,7 +47,7 @@ public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
     static final double INCREMENT1 = .23;
     static final double FORWARD_SPEED = 0.2;
     static final double TURN_SPEED = 0.1;
-    static final double INCREMENT = 0.6;
+    static final double INCREMENT = 1;
     static final int DARK = -54728;
     static final int LIGHT = -57278;
     public DcMotor leftMotor = null;
@@ -109,10 +109,10 @@ public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
 
         runtime.reset();
 
-        //Turns from backwards position to line up by corner vortex.
-        while (opModeIsActive() && (runtime.milliseconds() < 3050)) {
-                leftMotor.setPower(-INCREMENT);
-                rightMotor.setPower(-TURN_SPEED);
+        //Goes forward to line up by corner vortex.
+        while (opModeIsActive() && (runtime.milliseconds() < 900)) {
+                leftMotor.setPower(-.2);
+                rightMotor.setPower(-.23);
         }
         runtime.reset();
         while (runtime.milliseconds() < 300 && opModeIsActive()) {
@@ -120,15 +120,47 @@ public class AutonomousRED_PLAN_B_1 extends LinearOpMode {
             rightMotor.setPower(0);
         }
         runtime.reset();
-        //Shoot ball into corner.
-        while (runtime.milliseconds() < 2000 && opModeIsActive()) {
-            sweeper = -1;
-            robot.sweeperMotor.setPower(sweeper);
+        while (runtime.milliseconds() < 1555 && opModeIsActive()) {
+            leftMotor.setPower(-1);
+            rightMotor.setPower(0);
         }
         runtime.reset();
-        while (runtime.milliseconds() < 3000 && opModeIsActive()) {
-            leftMotor.setPower(-INCREMENT1);
-            rightMotor.setPower(-INCREMENT1);
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            leftMotor.setPower(0);
+            rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            leftMotor.setPower(-.4);
+            rightMotor.setPower(-.4);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 800 && opModeIsActive()) {
+            leftMotor.setPower(0);
+            rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 500 && opModeIsActive()) {
+            leftMotor.setPower(-.4);
+            rightMotor.setPower(-.4);
+        }
+        runtime.reset();
+        //Shoot ball into corner.
+        boolean SDone = false;
+        while (runtime.milliseconds() < 1000 && opModeIsActive() && !SDone) {
+            sweeper = -1;
+            robot.sweeperMotor.setPower(sweeper);
+            SDone = true;
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            leftMotor.setPower(0);
+            rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            leftMotor.setPower(-1);
+            rightMotor.setPower(-1);
         }
         runtime.reset();
         telemetry.update();

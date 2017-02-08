@@ -120,14 +120,14 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
 
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(1200);
+                sleep(1300);
             } else {
                 robot.Lservo.setPosition(MAX_POS); // Left Down
                 robot.Rservo.setPosition(MAX_POS); // Right Up
 
                 robot.leftMotor.setPower(.1);
                 robot.rightMotor.setPower(.1);
-                sleep(1200);
+                sleep(1300);
             }
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
@@ -178,7 +178,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
                 robot.leftMotor.setPower(.2);
-                robot.rightMotor.setPower(.23);
+                robot.rightMotor.setPower(.21);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(0);
                 robot.rightMotor.setPower(0);
@@ -377,21 +377,77 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         //    range1Cache = RANGE1Reader.read(RANGE1_REG_START, RANGE1_READ_LENGTH);
         //     UltraSonicDistance = range1Cache[0] & 0xFF;
         // } while (UltraSonicDistance > 9);
-
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-        sleep(1000);
-        robot.rightMotor.setPower(-.1);
-        robot.leftMotor.setPower(-1);
-        sleep(2200);
-        robot.rightMotor.setPower(0);
-        robot.leftMotor.setPower(0);
-        sleep(100);
-        robot.rightMotor.setPower(-.2);
-        robot.leftMotor.setPower(-.2);
-        sleep(2000);
-        robot.sweeperMotor.setPower(-1);
-        sleep(2000);
+        //Starts to line up as well as shoots ball in corner vortex.
+        while (opModeIsActive() && (runtime.milliseconds() < 340)) {
+            robot.leftMotor.setPower(-.5);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 300 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1250 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.1);
+            robot.rightMotor.setPower(-.1);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1300 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.7);
+            robot.rightMotor.setPower(0);
+        }
+        while (runtime.milliseconds() < 2100 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.4);
+            robot.rightMotor.setPower(-.4);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 800 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 900 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.3);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.5);
+            robot.rightMotor.setPower(-.5);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
+            robot.leftMotor.setPower(-.5);
+            robot.rightMotor.setPower(-.5);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        //Shoot ball into corner.
+        boolean SDone = false;
+        while (runtime.milliseconds() < 1000 && opModeIsActive() && !SDone) {
+            robot.sweeperMotor.setPower(-1);
+            SDone = true;
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+            robot.leftMotor.setPower(-1);
+            robot.rightMotor.setPower(-1);
+        }
         runtime.reset();
         LightFound = false;
 
