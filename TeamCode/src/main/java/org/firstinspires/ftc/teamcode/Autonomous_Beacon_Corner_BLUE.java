@@ -220,21 +220,21 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             }
 
             if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(680);
+                robot.leftMotor.setPower(.12);
+                robot.rightMotor.setPower(.12);
+                sleep(720);
                 ForwardDone = true;
             }
             if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(680);
+                robot.leftMotor.setPower(.12);
+                robot.rightMotor.setPower(.12);
+                sleep(720);
                 ForwardDone = true;
             }
             if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                robot.leftMotor.setPower(.1);
-                robot.rightMotor.setPower(.1);
-                sleep(680);
+                robot.leftMotor.setPower(.12);
+                robot.rightMotor.setPower(.12);
+                sleep(72/0);
                 ForwardDone = true;
             }
 
@@ -397,7 +397,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             robot.leftMotor.setPower(-.7);
             robot.rightMotor.setPower(0);
         }
-        while (runtime.milliseconds() < 2100 && opModeIsActive()) {
+        while (runtime.milliseconds() < 2720 && opModeIsActive()) {
             robot.leftMotor.setPower(-.4);
             robot.rightMotor.setPower(-.4);
         }
@@ -407,9 +407,19 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             robot.rightMotor.setPower(0);
         }
         runtime.reset();
+        while (runtime.milliseconds() < 800 && opModeIsActive()) {
+            robot.leftMotor.setPower(.1);
+            robot.rightMotor.setPower(.1);
+        }
+        runtime.reset();
         while (runtime.milliseconds() < 900 && opModeIsActive()) {
-            robot.leftMotor.setPower(-.3);
+            robot.leftMotor.setPower(-.5);
             robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 700 && opModeIsActive()) {
+            robot.leftMotor.setPower(.1);
+            robot.rightMotor.setPower(.1);
         }
         runtime.reset();
         while (runtime.milliseconds() < 1400 && opModeIsActive()) {
@@ -420,6 +430,11 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         while (runtime.milliseconds() < 1000 && opModeIsActive()) {
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
+        }
+        runtime.reset();
+        while (runtime.milliseconds() < 600 && opModeIsActive()) {
+            robot.leftMotor.setPower(.1);
+            robot.rightMotor.setPower(.1);
         }
         runtime.reset();
         while (runtime.milliseconds() < 1400 && opModeIsActive()) {
