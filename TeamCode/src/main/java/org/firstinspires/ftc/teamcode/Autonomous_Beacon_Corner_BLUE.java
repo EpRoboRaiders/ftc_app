@@ -234,7 +234,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             if (Rlightsensor == DARK && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(.12);
                 robot.rightMotor.setPower(.12);
-                sleep(72/0);
+                sleep(720);
                 ForwardDone = true;
             }
 
