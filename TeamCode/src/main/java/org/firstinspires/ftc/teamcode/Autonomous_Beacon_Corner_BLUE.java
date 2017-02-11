@@ -402,51 +402,52 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
             robot.rightMotor.setPower(-.4);
         }
         runtime.reset();
-        while (runtime.milliseconds() < 800 && opModeIsActive()) {
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-        }
-        runtime.reset();
-        while (runtime.milliseconds() < 800 && opModeIsActive()) {
-            robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(.1);
-        }
-        runtime.reset();
+//        while (runtime.milliseconds() < 800 && opModeIsActive()) {
+//            robot.leftMotor.setPower(0);
+//            robot.rightMotor.setPower(0);
+//        }
+//        runtime.reset();
+//        while (runtime.milliseconds() < 800 && opModeIsActive()) {
+//            robot.leftMotor.setPower(.1);
+//            robot.rightMotor.setPower(.1);
+//        }
+//        runtime.reset();
         while (runtime.milliseconds() < 900 && opModeIsActive()) {
             robot.leftMotor.setPower(-.5);
             robot.rightMotor.setPower(0);
         }
         runtime.reset();
-        while (runtime.milliseconds() < 700 && opModeIsActive()) {
-            robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(.1);
-        }
-        runtime.reset();
-        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
-            robot.leftMotor.setPower(-.5);
-            robot.rightMotor.setPower(-.5);
-        }
-        runtime.reset();
-        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-        }
-        runtime.reset();
-        while (runtime.milliseconds() < 600 && opModeIsActive()) {
-            robot.leftMotor.setPower(.1);
-            robot.rightMotor.setPower(.1);
-        }
-        runtime.reset();
-        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
-            robot.leftMotor.setPower(-.5);
-            robot.rightMotor.setPower(-.5);
-        }
-        runtime.reset();
-        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
-        }
-        runtime.reset();
+//          Taking out the correcting to have it aim diagonally on the ramp.
+//        while (runtime.milliseconds() < 700 && opModeIsActive()) {
+//            robot.leftMotor.setPower(.1);
+//            robot.rightMotor.setPower(.1);
+//        }
+//        runtime.reset();
+//        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
+//            robot.leftMotor.setPower(-.5);
+//            robot.rightMotor.setPower(-.5);
+//        }
+//        runtime.reset();
+//        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+//            robot.leftMotor.setPower(0);
+//            robot.rightMotor.setPower(0);
+//        }
+//        runtime.reset();
+//        while (runtime.milliseconds() < 600 && opModeIsActive()) {
+//            robot.leftMotor.setPower(.1);
+//            robot.rightMotor.setPower(.1);
+//        }
+//        runtime.reset();
+//        while (runtime.milliseconds() < 1400 && opModeIsActive()) {
+//            robot.leftMotor.setPower(-.5);
+//            robot.rightMotor.setPower(-.5);
+//        }
+//        runtime.reset();
+//        while (runtime.milliseconds() < 1000 && opModeIsActive()) {
+//            robot.leftMotor.setPower(0);
+//            robot.rightMotor.setPower(0);
+//        }
+//        runtime.reset();
         //Shoot ball into corner.
         boolean SDone = false;
         while (runtime.milliseconds() < 1000 && opModeIsActive() && !SDone) {
