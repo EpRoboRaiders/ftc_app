@@ -42,7 +42,7 @@ public class TeleOp extends LinearOpMode {
     double launcher2 = 0;
 
 
-     HardwarePushbotEdited robot = new HardwarePushbotEdited();   // Use a Pushbot's hardware
+    HardwarePushbotEdited robot = new HardwarePushbotEdited();   // Use a Pushbot's hardware
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -53,7 +53,7 @@ public class TeleOp extends LinearOpMode {
         telemetry.addData(">", "Press Start to run Motors.");
         telemetry.update();
         waitForStart();
-            //Sweeper
+        //Sweeper
         while (opModeIsActive()) {
             robot.Lservo.setPosition(leftposition);
             robot.Rservo.setPosition(rightposition);
@@ -73,170 +73,169 @@ public class TeleOp extends LinearOpMode {
                 }
             }
 
-
-            //Servos
-            if (gamepad2.dpad_right) {
-                leftposition -= SERVO_INC;
-                if (leftposition <= MIN_POS) {
-                    leftposition = MIN_POS;
+                //Servos
+                if (gamepad2.dpad_right) {
+                    leftposition -= SERVO_INC;
+                    if (leftposition <= MIN_POS) {
+                        leftposition = MIN_POS;
+                    }
                 }
-            }
-            if (!gamepad2.dpad_right) {
-                leftposition += SERVO_INC;
-                if (leftposition >= MAX_POS) {
-                    leftposition = MAX_POS;
+                if (!gamepad2.dpad_right) {
+                    leftposition += SERVO_INC;
+                    if (leftposition >= MAX_POS) {
+                        leftposition = MAX_POS;
+                    }
                 }
-            }
 
 
-            if (!gamepad2.dpad_left) {
-                rightposition -= SERVO_INC;
-                if (rightposition <= MIN_POS) {
-                    rightposition = MIN_POS;
+                if (!gamepad2.dpad_left) {
+                    rightposition -= SERVO_INC;
+                    if (rightposition <= MIN_POS) {
+                        rightposition = MIN_POS;
+                    }
                 }
-            }
-            if (gamepad2.dpad_left) {
-                rightposition += SERVO_INC;
-                if (rightposition >= MAX_POS) {
-                    rightposition = MAX_POS;
+                if (gamepad2.dpad_left) {
+                    rightposition += SERVO_INC;
+                    if (rightposition >= MAX_POS) {
+                        rightposition = MAX_POS;
+                    }
                 }
-            }
 
 
-            //Launcher
+                //Launcher
 //            if(gamepad2.x){
 //                launcher = -.3;
 //            }
 //            if (!gamepad2.x){
 //                launcher = 0;
 //            }
-            //Launcher 2
-            if(gamepad2.y){
-                launcher2 = 1;
-            }
-            if (!gamepad2.y){
-                launcher2 = 0;
-            }
+                //Launcher 2
+                if (gamepad2.y) {
+                    launcher2 = 1;
+                }
+                if (!gamepad2.y) {
+                    launcher2 = 0;
+                }
 
-            //Start of Driving
-            if (gamepad1.left_stick_y != leftpower) {
-                if (leftpower < gamepad1.left_stick_y) {
-                    leftpower += INCREMENT;
-                    if (leftpower > gamepad1.left_stick_y) {
-                        leftpower = gamepad1.left_stick_y;
-                    }
-                } else {
-                    leftpower -= INCREMENT;
+                //Start of Driving
+                if (gamepad1.left_stick_y != leftpower) {
                     if (leftpower < gamepad1.left_stick_y) {
-                        leftpower = gamepad1.left_stick_y;
+                        leftpower += INCREMENT;
+                        if (leftpower > gamepad1.left_stick_y) {
+                            leftpower = gamepad1.left_stick_y;
+                        }
+                    } else {
+                        leftpower -= INCREMENT;
+                        if (leftpower < gamepad1.left_stick_y) {
+                            leftpower = gamepad1.left_stick_y;
 
+                        }
                     }
                 }
-            }
-            if (gamepad1.right_stick_y != rightpower) {
-                if (rightpower < gamepad1.right_stick_y) {
-                    rightpower += INCREMENT;
-                    if (rightpower > gamepad1.right_stick_y) {
-                        rightpower = gamepad1.right_stick_y;
-                    }
-                } else {
-                    rightpower -= INCREMENT;
+                if (gamepad1.right_stick_y != rightpower) {
                     if (rightpower < gamepad1.right_stick_y) {
-                        rightpower = gamepad1.right_stick_y;
+                        rightpower += INCREMENT;
+                        if (rightpower > gamepad1.right_stick_y) {
+                            rightpower = gamepad1.right_stick_y;
+                        }
+                    } else {
+                        rightpower -= INCREMENT;
+                        if (rightpower < gamepad1.right_stick_y) {
+                            rightpower = gamepad1.right_stick_y;
+                        }
                     }
                 }
-            }
-            //Backwards button
-            if (opModeIsActive() && gamepad1.right_bumper) {
-                double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
-                double Llightsensor = robot.leftlightSensor.getRawLightDetected();
+                //Backwards button
+                if (opModeIsActive() && gamepad1.right_bumper) {
+                    double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
+                    double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
-                if (Llightsensor < 2.0) {
-                    Llightsensor = DARK;
-                } else {
-                    Llightsensor = LIGHT;
+                    if (Llightsensor < 2.0) {
+                        Llightsensor = DARK;
+                    } else {
+                        Llightsensor = LIGHT;
+                    }
+
+                    if (Rlightsensor < 2.0) {
+                        Rlightsensor = DARK;
+                    } else {
+                        Rlightsensor = LIGHT;
+                    }
+
+
+                    if (Rlightsensor == DARK && Llightsensor == DARK) {
+                        leftpower = -LINE_FOLLOWER;
+                        rightpower = -LINE_FOLLOWER;
+                    } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
+                        leftpower = -LINE_FOLLOWER;
+                        rightpower = -LINE_FOLLOWER;
+                    } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
+                        leftpower = -LINE_TURN;
+                        rightpower = -LINE_FOLLOWER;
+                    } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
+                        leftpower = -LINE_FOLLOWER;
+                        rightpower = -LINE_TURN;
+                    }
+                    // send the info back to driver station using telemetry function.
+                    telemetry.addData("LED", bLedOn ? "On" : "Off");
+                    telemetry.addData("Raw", robot.leftlightSensor.getRawLightDetected());
+                    telemetry.addData("Normal", robot.leftlightSensor.getLightDetected());
+
+                    telemetry.update();
                 }
+                //Forwards button
+                if (opModeIsActive() && gamepad1.left_bumper) {
+                    double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
+                    double Llightsensor = robot.leftlightSensor.getRawLightDetected();
 
-                if (Rlightsensor < 2.0) {
-                    Rlightsensor = DARK;
-                } else {
-                    Rlightsensor = LIGHT;
+                    if (Llightsensor < 2.0) {
+                        Llightsensor = DARK;
+                    } else {
+                        Llightsensor = LIGHT;
+                    }
+
+                    if (Rlightsensor < 2.0) {
+                        Rlightsensor = DARK;
+                    } else {
+                        Rlightsensor = LIGHT;
+                    }
+
+
+                    if (Rlightsensor == DARK && Llightsensor == DARK) {
+                        leftpower = LINE_FOLLOWER;
+                        rightpower = LINE_FOLLOWER;
+                    } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
+                        leftpower = LINE_FOLLOWER;
+                        rightpower = LINE_FOLLOWER;
+                    } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
+                        leftpower = LINE_TURN;
+                        rightpower = LINE_FOLLOWER;
+                    } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
+                        leftpower = LINE_FOLLOWER;
+                        rightpower = LINE_TURN;
+                    }
+                    // send the info back to driver station using telemetry function.
+                    telemetry.addData("LED", bLedOn ? "On" : "Off");
+                    telemetry.addData("Raw", robot.leftlightSensor.getRawLightDetected());
+                    telemetry.addData("Normal", robot.leftlightSensor.getLightDetected());
+
+                    telemetry.update();
                 }
-
-
-                if (Rlightsensor == DARK && Llightsensor == DARK) {
-                    leftpower = -LINE_FOLLOWER;
-                    rightpower = -LINE_FOLLOWER;
-                } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                    leftpower = -LINE_FOLLOWER;
-                    rightpower = -LINE_FOLLOWER;
-                } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                    leftpower = -LINE_TURN;
-                    rightpower = -LINE_FOLLOWER;
-                } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                    leftpower = -LINE_FOLLOWER;
-                    rightpower = -LINE_TURN;
-                }
-                // send the info back to driver station using telemetry function.
-                telemetry.addData("LED", bLedOn ? "On" : "Off");
-                telemetry.addData("Raw", robot.leftlightSensor.getRawLightDetected());
-                telemetry.addData("Normal", robot.leftlightSensor.getLightDetected());
-
+                telemetry.addData(">", "Set Power 1.");
                 telemetry.update();
+                robot.leftMotor.setPower(-leftpower);
+                robot.rightMotor.setPower(-rightpower);     //Motors are reversed :(
+                robot.sweeperMotor.setPower(sweeper);
+                robot.launcherMotor.setPower(launcher);
+                robot.launcher2Motor.setPower(launcher2);
+                // Set the motor to the new power and pause;
+
+                sleep(CYCLE_MS);
+                idle();
+
             }
-            //Forwards button
-            if (opModeIsActive() && gamepad1.left_bumper) {
-                double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
-                double Llightsensor = robot.leftlightSensor.getRawLightDetected();
-
-                if (Llightsensor < 2.0) {
-                    Llightsensor = DARK;
-                } else {
-                    Llightsensor = LIGHT;
-                }
-
-                if (Rlightsensor < 2.0) {
-                    Rlightsensor = DARK;
-                } else {
-                    Rlightsensor = LIGHT;
-                }
-
-
-                if (Rlightsensor == DARK && Llightsensor == DARK) {
-                    leftpower = LINE_FOLLOWER;
-                    rightpower = LINE_FOLLOWER;
-                } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
-                    leftpower = LINE_FOLLOWER;
-                    rightpower = LINE_FOLLOWER;
-                } else if (Rlightsensor == DARK && Llightsensor == LIGHT) {
-                    leftpower = LINE_TURN;
-                    rightpower = LINE_FOLLOWER;
-                } else if (Rlightsensor == LIGHT && Llightsensor == DARK) {
-                    leftpower = LINE_FOLLOWER;
-                    rightpower = LINE_TURN;
-                }
-                // send the info back to driver station using telemetry function.
-                telemetry.addData("LED", bLedOn ? "On" : "Off");
-                telemetry.addData("Raw", robot.leftlightSensor.getRawLightDetected());
-                telemetry.addData("Normal", robot.leftlightSensor.getLightDetected());
-
-                telemetry.update();
-            }
-            telemetry.addData(">", "Set Power 1.");
-            telemetry.update();
-            robot.leftMotor.setPower(-leftpower);
-            robot.rightMotor.setPower(-rightpower);     //Motors are reversed :(
-            robot.sweeperMotor.setPower(sweeper);
-            robot.launcherMotor.setPower(launcher);
-            robot.launcher2Motor.setPower(launcher2);
-            // Set the motor to the new power and pause;
-
-            sleep(CYCLE_MS);
-            idle();
-
         }
     }
-}
 
 
 

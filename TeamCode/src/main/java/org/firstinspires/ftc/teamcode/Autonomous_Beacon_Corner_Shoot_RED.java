@@ -170,13 +170,13 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
         boolean LightFound = false;
         boolean Shoot = false;
         while (opModeIsActive() && runtime.milliseconds() < 6000 && !Shoot) {
-            robot.leftMotor.setPower(.2);
+            robot.leftMotor.setPower(.21);
             robot.rightMotor.setPower(.2);
             sleep(2400);
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
             sleep(1000);
-            robot.launcher2Motor.setPower(.1);
+            robot.launcher2Motor.setPower(.2);
             sleep(1000);
             robot.launcher2Motor.setPower(0);
             robot.leftMotor.setPower(0);
@@ -200,7 +200,7 @@ public class Autonomous_Beacon_Corner_Shoot_RED extends LinearOpMode {
             }
 
             if (Rlightsensor == DARK && Llightsensor == DARK) {
-                robot.leftMotor.setPower(.2);
+                robot.leftMotor.setPower(.21);
                 robot.rightMotor.setPower(.2);
             } else if (Rlightsensor == LIGHT && Llightsensor == LIGHT) {
                 robot.leftMotor.setPower(0);

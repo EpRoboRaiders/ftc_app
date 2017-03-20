@@ -116,8 +116,8 @@ public class Autonomous_PLAN_B_V2 extends LinearOpMode {
 
         //Hit cap ball & stop on middle platform.
         while (opModeIsActive() && (runtime.milliseconds() < 4400)) {
-                robot.leftMotor.setPower(FORWARD_SPEED1);
-                rightMotor.setPower(.23);
+                robot.leftMotor.setPower(.2);
+                rightMotor.setPower(.2);
         }
 
 
@@ -125,16 +125,6 @@ public class Autonomous_PLAN_B_V2 extends LinearOpMode {
         idle();
         //       }
 
-        // Step 0:  Stop and close the claw.
-        // robot.leftMotor.setPower(0);
-        // robot.rightMotor.setPower(0);
-        //  robot.leftClaw.setPosition(1.0);
-        // robot.rightClaw.setPosition(0.0);
-
-        //      telemetry.addData("Path", "Complete");
-        //       telemetry.update();
-        //       sleep(1000);
-        //      idle();
     }
 }
 
