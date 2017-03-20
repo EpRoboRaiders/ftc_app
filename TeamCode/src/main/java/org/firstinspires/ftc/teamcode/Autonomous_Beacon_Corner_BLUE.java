@@ -158,7 +158,7 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         robot.colorSensor.enableLed(LEDState);
 
         runtime.reset();
-        boolean LightFound = false;;
+        boolean LightFound = false;
 
         while (opModeIsActive() && (runtime.milliseconds() < 1000000) && (!LightFound)) {
             double Rlightsensor = robot.rightlightSensor.getRawLightDetected();
@@ -466,7 +466,6 @@ public class Autonomous_Beacon_Corner_BLUE extends LinearOpMode {
         }
         runtime.reset();
         LightFound = false;
-
 
         robot.sweeperMotor.setPower(0);
         robot.rightMotor.setPower(0);
