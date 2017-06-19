@@ -6,6 +6,10 @@
           <option name="url" value="https://github.com/EpRoboRaiders/ftc_app.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/EpRoboRaiders/2017-2018-ftc.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\FIRSTMentor\Documents" />
